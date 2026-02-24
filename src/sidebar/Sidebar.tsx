@@ -7,7 +7,7 @@ function SidebarButton(props: {setActiveTool: Function, targetTool: string}) {
 
 function Sidebar(props: {setActiveTool: Function}) {
     return (
-        <div style={{display: 'flex', flexDirection: 'column'}}>
+        <div style={{display: 'flex', flexDirection: 'column', backgroundColor: '#ccc', height: '100vh', padding: '5px', width: '100px'}}>
             <SidebarButton setActiveTool={props.setActiveTool} targetTool={'caesar'}/>
             <SidebarButton setActiveTool={props.setActiveTool} targetTool={'random npc'}/>
         </div>

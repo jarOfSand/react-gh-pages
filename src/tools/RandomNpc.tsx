@@ -10,9 +10,9 @@ function RandomNpc() {
     const [profession, setProfession] = useState('');
     const [species, setSpecies] = useState('');
     const [subspecies, setSubspecies] = useState('');
-    
+
     const subspeciesString = subspecies ? `(${subspecies})` : '';
-    const result = `${species}${subspeciesString}, ${profession}`;
+    const speciesString = `${species}${subspeciesString}`
 
     return (
         <div style={{
@@ -20,7 +20,7 @@ function RandomNpc() {
             display: 'flex',
             flexDirection: 'column'
         }}>
-            <button style={{marginRight: 'auto'}} onClick={() => {
+            <button style={{ marginRight: 'auto' }} onClick={() => {
                 const currentSpecies = chance.pickone(SPECIES);
                 const currentSubspecies = currentSpecies.subspecies && currentSpecies.subspecies.length > 0 ? chance.pickone(currentSpecies.subspecies) : '';
 
@@ -28,8 +28,11 @@ function RandomNpc() {
                 setSubspecies(currentSubspecies);
                 setProfession(chance.pickone(PROFESSIONS));
             }}>{'generate'}</button>
-            <div>{result}</div>
-            {species && <a style={{marginRight: 'auto'}} target={'_blank'} href={`https://dnd5e.wikidot.com/lineage:${species}`}>{'lineage:wiki'}</a>}
+            {profession && <div>{profession}</div>}
+            {species && <>
+                <div>{speciesString}</div>
+                <a style={{ marginRight: 'auto' }} target={'_blank'} href={`https://dnd5e.wikidot.com/lineage:${species}`}>{'lineage:wiki'}</a>
+            </>}
         </div>
     );
 }

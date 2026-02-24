@@ -3,15 +3,17 @@ import RandomNpc from './RandomNpc';
 import { observer } from 'mobx-react';
 
 function Tool(props: {activeTool: string}) {
+    let component;
     if(props.activeTool === 'caesar') {
-        return (<Caesar/>);    
+        component = <Caesar/>;
     }
-
     if(props.activeTool === 'random npc') {
-        return (<RandomNpc/>);    
+        component = <RandomNpc/>;    
     }
     
-    return null;
+    return <div style={{backgroundColor: '#ddd', width: '100%'}}>
+        {component}
+    </div>;
 }
 
 export default observer(Tool);
