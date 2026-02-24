@@ -40,20 +40,9 @@ function Caesar() {
     }}>
       <div style={{
         display: 'flex',
-        flexDirection: 'column',
-        marginRight: '3px'
-      }}
-      >
-        <div style={{ marginLeft: 'auto' }}>{'cyphertext:'}</div>
-        <div style={{ marginLeft: 'auto' }}>{'plaintexts:'}</div>
-
-      </div>
-
-      <div style={{
-        display: 'flex',
         flexDirection: 'column'
       }}>
-        <input onChange={(e) => { setCyphertext(e.target.value) }}></input>
+        <input placeholder={'cyphertext'} onChange={(e) => { setCyphertext(e.target.value) }}></input>
         {getResults(cyphertext)}
       </div>
     </div>
