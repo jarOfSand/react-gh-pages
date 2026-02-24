@@ -37,7 +37,6 @@ function Caesar() {
       margin: '5px',
       display: 'flex',
       flexDirection: 'row',
-      width: '500px'
     }}>
       <div style={{
         display: 'flex',

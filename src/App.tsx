@@ -7,7 +7,7 @@ function App() {
   const [activeTool, setActiveTool] = useState('');
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', width: '100vw' }}>
       <Sidebar setActiveTool={setActiveTool} />
       <Tool activeTool={activeTool} />
     </div>

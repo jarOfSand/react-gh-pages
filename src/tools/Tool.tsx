@@ -7,7 +7,7 @@ function Tool(props: {activeTool: string}) {
     if(props.activeTool === 'caesar') {
         component = <Caesar/>;
     }
-    if(props.activeTool === 'random npc') {
+    if(props.activeTool === 'npc') {
         component = <RandomNpc/>;    
     }
     
