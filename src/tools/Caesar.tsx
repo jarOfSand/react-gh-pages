@@ -19,6 +19,9 @@ function shiftCaesar(cyphertext: string, offset: number): string {
 }
 
 function getResults(cyphertext: string) {
+  if(cyphertext === '') {
+    return null;
+  }
   const plaintexts = [];
   for (let i = 1; i < ALPHABET.length; i++) {
     plaintexts.push(<div style={{display: 'flex'}}>
