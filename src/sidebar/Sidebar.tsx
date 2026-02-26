@@ -1,5 +1,6 @@
 import { useState } from 'react';
 // import './Sidebar.scss'
+import { diceStore } from '../stores/dice-store';
 
 function SidebarButton(props: {setActiveTool: Function, targetTool: string}) {
     return <button onClick={() => props.setActiveTool(props.targetTool)}>{props.targetTool}</button>
@@ -11,6 +12,7 @@ function Sidebar(props: {setActiveTool: Function}) {
             <SidebarButton setActiveTool={props.setActiveTool} targetTool={'caesar'}/>
             <SidebarButton setActiveTool={props.setActiveTool} targetTool={'npc'}/>
             <SidebarButton setActiveTool={props.setActiveTool} targetTool={'dice'}/>
+            {/* <div>{diceStore.rollResult}</div> */}
         </div>
     );
 }

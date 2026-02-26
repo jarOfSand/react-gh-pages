@@ -4,6 +4,7 @@ import Sidebar from './sidebar/Sidebar';
 import Tool from './tools/Tool';
 
 function App() {
+
   const [activeTool, setActiveTool] = useState('');
 
   return (

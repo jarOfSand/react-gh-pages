@@ -1,29 +1,32 @@
-import { useState } from 'react';
-
-// import chance from 'chance';
-// var randomName = chance().string();
-const Chance = require('chance');
-const chance = new Chance();
+import * as diceHelper from '../helpers/dice-helper';
+import { diceStore, setRollResult, setLastestHandfullRolled, setHandfull, setCustomHandfulls, setDeletionMode } from '../stores/dice-store';
+import { observer } from 'mobx-react';
 
 function DiceRoller() {
-    const [rollResult, setRollResult] = useState('');
-    const [diceRolled, setDiceRolled] = useState(null);
-    const [diceCount, setDiceCount] = useState(1);
-    const [diceSize, setDiceSize] = useState(6);
+    const {rollResult, lastestHandfullRolled, deletionMode, customHandfulls, handfull} = diceStore;
 
-    // =1 -1 [roll] +1 +5
-    // d4 d6 d8 d10 d12 d20 d100
-
-    function rollDice() {
-        const result = [];
-        let total = 0;
-        for(let i = 0; i < diceCount; i++) {
-            const roll = chance.natural({min: 1, max: diceSize})
-            result.push(roll);
-            total += roll;
-        }
-        return diceCount > 1 ? `${total} [${result}]` : `${total}`;
+    function removeCustomHandfull(index: number) {
+        const newCustomHandfulls = customHandfulls
+        newCustomHandfulls.splice(index, 1);
+        setCustomHandfulls(newCustomHandfulls);
     }
+
+    const HandfullButton = (props: { handfull: string, index: number }) => {
+        return (<button style={deletionMode ? {color: '#b1000d'} : {}} onClick={() => {
+            if (deletionMode) {
+                removeCustomHandfull(props.index);
+            } else {
+                const result = diceHelper.rollHandfull(props.handfull);
+                setRollResult(result);
+                setLastestHandfullRolled(props.handfull);
+            }
+        }
+        }>{props.handfull}</button>);
+    }
+
+    const userMadeButtons = customHandfulls.length === 0 ? null : customHandfulls.map((handfull, index) => {
+        return <HandfullButton handfull={handfull} index={index} key={index} />;
+    })
 
     return (
         <div style={{
@@ -32,39 +35,44 @@ function DiceRoller() {
             flexDirection: 'column'
         }}>
             <div className={'button-row'} style={{ display: 'flex', marginRight: 'auto' }}>
-                <button onClick={() => setDiceSize(4)}>{'d4'}</button>
-                <button onClick={() => setDiceSize(6)}>{'d6'}</button>
-                <button onClick={() => setDiceSize(8)}>{'d8'}</button>
-                <button onClick={() => setDiceSize(10)}>{'d10'}</button>
-                <button onClick={() => setDiceSize(12)}>{'d12'}</button>
-                <button onClick={() => setDiceSize(20)}>{'d20'}</button>
-                <button onClick={() => setDiceSize(100)}>{'d100'}</button>
+                <input placeholder={'example: d8+2d4+2'} onChange={(e) => { setHandfull(e.target.value) }}></input>
             </div>
-
-            <div className={'button-row'} style={{ display: 'flex', marginRight: 'auto' }}>
-                <button onClick={() => setDiceCount(1)}>{'1'}</button>
-                <button onClick={() => {if(diceCount > 1){setDiceCount(diceCount - 1)}}}>{'-1'}</button>
-                
-                <button onClick={
-                    () => {
-                        const result = rollDice();
+            <div className={'button-row'} style={{ display: 'flex', marginRight: 'auto', marginTop: '5px' }}>
+                <button onClick={() => {
+                    if (handfull) {
+                        const result = diceHelper.rollHandfull(handfull);
                         setRollResult(result);
+                        setLastestHandfullRolled(handfull);
                     }
+                }}>{'roll handfull: ' + handfull}</button>
+                <button onClick={() => {
+                    if (handfull) {
+                        setCustomHandfulls([...customHandfulls, handfull])
+                    }
+                }}>{'save handfull'}</button>
 
-                }>{'roll'}</button>
 
-                <button onClick={() => setDiceCount(diceCount + 1)}>{'+1'}</button>
-                <button onClick={() => setDiceCount(diceCount + 5)}>{'+5'}</button>
+                <button onClick={() => {
+                    setDeletionMode(!deletionMode);
+                }}><i style={{ color: '#aaa' }}>{!deletionMode ? 'deletion mode' : 'roll mode'}</i></button>
             </div>
+
+
+
 
             <div className={'button-row'} style={{ display: 'flex', marginRight: 'auto' }}>
-                
+                {userMadeButtons}
             </div>
 
-            {/* {species && <div style={{ marginTop: '10px' }}>{speciesString}</div>} */}
-            <div style={{ marginTop: '10px' }}>{`${diceCount}d${diceSize} -> ${rollResult}`}</div>
+
+            {lastestHandfullRolled && <>
+                <span style={{ color: '#aaa' }}>{`${lastestHandfullRolled} = `}</span>
+                <span>{rollResult}</span>
+            </>
+            }
+
         </div>
     );
 }
 
-export default DiceRoller;
+export default observer(DiceRoller);
