@@ -2,18 +2,27 @@ import { diceStore, handleCustomButtonClick, saveCustomHandfull, rollHandfull, s
 import { observer } from 'mobx-react';
 
 function DiceRoller() {
-    const {rollResult, customHandfulls_v2, lastestHandfullRolled, deletionMode, customHandfulls, handfull, handfullName} = diceStore;
+    const { rollResult, history, latestRollDesc, customHandfulls_v2, deletionMode, handfull, handfullName } = diceStore;
 
-    const HandfullButton = (props: { handfullName: string, handfullValue: string, index: number }) => {
-        return (<button style={deletionMode ? {color: '#b1000d'} : {}} onClick={() => {
+    const HandfullButton = (props: { handfull: { name: string, value: string }, index: number }) => {
+        return (<button style={deletionMode ? { color: '#b1000d' } : {}} onClick={() => {
             handleCustomButtonClick(props.index);
         }
-        }>{props.handfullName ? `${props.handfullName}: ${props.handfullValue}` : props.handfullValue}</button>);
+        }>{props.handfull.name ? props.handfull.name : props.handfull.value}</button>);
     }
 
     const userMadeButtons = customHandfulls_v2.length === 0 ? null : customHandfulls_v2.map((handfullObj, index) => {
-        return <HandfullButton handfullName={handfullObj.name} handfullValue={handfullObj.value} index={index} key={index} />;
-    })
+        return <HandfullButton handfull={handfullObj} index={index} key={index} />;
+    });
+
+    const rollResultQueue = history.length === 0 ? null : history.map((historyObj, index) => {
+        const {rollDesc, rollResult} = historyObj;
+
+        return (<div style={ index === 0 ? {marginBottom: '15px'} : {} }>
+            <span style={{ marginRight: '5px' }}>{rollResult}</span>
+            <span style={{ color: '#aaa', marginRight: '5px' }}>{rollDesc}</span>
+        </div>)
+    });
 
     return (
         <div style={{
@@ -22,7 +31,7 @@ function DiceRoller() {
             flexDirection: 'column'
         }}>
             <div style={{ display: 'flex', flexDirection: 'column', marginRight: 'auto' }}>
-                <input placeholder={'ex: fire sword'} onChange={(e) => { setHandfullName(e.target.value) }} value={handfullName} />
+                <input placeholder={'ex: fire sword or empty'} onChange={(e) => { setHandfullName(e.target.value) }} value={handfullName} />
                 <input placeholder={'ex: d8+2d4+3'} onChange={(e) => { setHandfull(e.target.value) }} value={handfull} />
             </div>
             <div className={'button-row'} style={{ display: 'flex', marginRight: 'auto', marginTop: '5px' }}>
@@ -35,11 +44,7 @@ function DiceRoller() {
                 {userMadeButtons}
             </div>
 
-            {lastestHandfullRolled && <>
-                <span style={{ color: '#aaa' }}>{`${lastestHandfullRolled} = `}</span>
-                <span>{rollResult}</span>
-            </>
-            }
+            {rollResultQueue}
         </div>
     );
 }

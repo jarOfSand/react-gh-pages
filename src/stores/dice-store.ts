@@ -5,15 +5,20 @@ type handfullObj = {
     name: string,
     value: string
 };
+type historyObj = {
+    rollDesc: string,
+    rollResult: string
+}
 
 type diceState = {
     customHandfulls: string[],
     deletionMode: boolean,
     handfull: string,
-    lastestHandfullRolled: string,
+    latestRollDesc: string,
     rollResult: string,
     handfullName: string,
-    customHandfulls_v2: handfullObj[]
+    customHandfulls_v2: handfullObj[],
+    history: historyObj[]
 };
 
 export const diceStore: diceState = observable({
@@ -21,42 +26,53 @@ export const diceStore: diceState = observable({
     deletionMode: false,
     handfull: '',
     handfullName: '',
-    lastestHandfullRolled: '',
+    latestRollDesc: '',
     rollResult: '',
-
+    history: [],
     customHandfulls_v2: [
         { name: 'lvl3 fireball', value: '8d6' },
-        { name: 'magic missile', value: 'd4+1' }
+        { name: '', value: 'd20' }
     ]
 });
 
 export const rollHandfull = action(() => {
-    const { handfull } = diceStore;
+    const { handfull, handfullName } = diceStore;
     if (handfull) {
-        const result = diceHelper.rollHandfull(handfull);
-
-        setRollResult(result);
-        setLastestHandfullRolled(handfull);
+        handleRoll({ name: handfullName, value: handfull })
     }
 });
 
+function handleRoll(handfullObj: handfullObj) {
+    const { name, value } = handfullObj;
+    const { history } = diceStore;
+
+    const result = diceHelper.rollHandfull(value);
+    const rollDesc = name ? `${name}, ${value}` : value;
+
+    diceStore.rollResult = result;
+    diceStore.latestRollDesc = rollDesc;
+
+    history.unshift({rollDesc, rollResult: result});
+    if(history.length > 10) {
+        history.pop();
+    }
+}
+
 export const handleCustomButtonClick = action((index: number) => {
-    const {deletionMode, customHandfulls_v2} = diceStore;
+    const { deletionMode, customHandfulls_v2 } = diceStore;
 
     if (deletionMode) {
         deleteCustomHandfull(index);
     } else {
-        const {value} = customHandfulls_v2[index];
-
-        const result = diceHelper.rollHandfull(value);
-        setRollResult(result);
-        setLastestHandfullRolled(value);
+        handleRoll(customHandfulls_v2[index]);
     }
 })
 
 export const saveCustomHandfull = action(() => {
     const { handfull, handfullName, customHandfulls_v2 } = diceStore;
-    diceStore.customHandfulls_v2 = [...customHandfulls_v2, { name: handfullName, value: handfull }]
+    if (handfull) {
+        diceStore.customHandfulls_v2 = [...customHandfulls_v2, { name: handfullName, value: handfull }]
+    }
 });
 
 export function deleteCustomHandfull(index: number) {
@@ -79,10 +95,6 @@ export const toggleDeletionMode = action(() => {
 
 export const setHandfull = action((handfull: string) => {
     diceStore.handfull = handfull;
-});
-
-export const setLastestHandfullRolled = action((lastestHandfullRolled: string) => {
-    diceStore.lastestHandfullRolled = lastestHandfullRolled;
 });
 
 export const setRollResult = action((rollResult: string) => {
