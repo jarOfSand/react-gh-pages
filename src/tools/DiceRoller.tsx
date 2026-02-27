@@ -1,31 +1,18 @@
-import * as diceHelper from '../helpers/dice-helper';
-import { diceStore, setRollResult, setLastestHandfullRolled, setHandfull, setCustomHandfulls, setDeletionMode } from '../stores/dice-store';
+import { diceStore, handleCustomButtonClick, saveCustomHandfull, rollHandfull, setHandfull, toggleDeletionMode, setHandfullName } from '../stores/dice-store';
 import { observer } from 'mobx-react';
 
 function DiceRoller() {
-    const {rollResult, lastestHandfullRolled, deletionMode, customHandfulls, handfull} = diceStore;
+    const {rollResult, customHandfulls_v2, lastestHandfullRolled, deletionMode, customHandfulls, handfull, handfullName} = diceStore;
 
-    function removeCustomHandfull(index: number) {
-        const newCustomHandfulls = customHandfulls
-        newCustomHandfulls.splice(index, 1);
-        setCustomHandfulls(newCustomHandfulls);
-    }
-
-    const HandfullButton = (props: { handfull: string, index: number }) => {
+    const HandfullButton = (props: { handfullName: string, handfullValue: string, index: number }) => {
         return (<button style={deletionMode ? {color: '#b1000d'} : {}} onClick={() => {
-            if (deletionMode) {
-                removeCustomHandfull(props.index);
-            } else {
-                const result = diceHelper.rollHandfull(props.handfull);
-                setRollResult(result);
-                setLastestHandfullRolled(props.handfull);
-            }
+            handleCustomButtonClick(props.index);
         }
-        }>{props.handfull}</button>);
+        }>{props.handfullName ? `${props.handfullName}: ${props.handfullValue}` : props.handfullValue}</button>);
     }
 
-    const userMadeButtons = customHandfulls.length === 0 ? null : customHandfulls.map((handfull, index) => {
-        return <HandfullButton handfull={handfull} index={index} key={index} />;
+    const userMadeButtons = customHandfulls_v2.length === 0 ? null : customHandfulls_v2.map((handfullObj, index) => {
+        return <HandfullButton handfullName={handfullObj.name} handfullValue={handfullObj.value} index={index} key={index} />;
     })
 
     return (
@@ -34,27 +21,14 @@ function DiceRoller() {
             display: 'flex',
             flexDirection: 'column'
         }}>
-            <div className={'button-row'} style={{ display: 'flex', marginRight: 'auto' }}>
-                <input placeholder={'example: d8+2d4+2'} onChange={(e) => { setHandfull(e.target.value) }} value={handfull} />
+            <div style={{ display: 'flex', flexDirection: 'column', marginRight: 'auto' }}>
+                <input placeholder={'ex: fire sword'} onChange={(e) => { setHandfullName(e.target.value) }} value={handfullName} />
+                <input placeholder={'ex: d8+2d4+3'} onChange={(e) => { setHandfull(e.target.value) }} value={handfull} />
             </div>
             <div className={'button-row'} style={{ display: 'flex', marginRight: 'auto', marginTop: '5px' }}>
-                <button onClick={() => {
-                    if (handfull) {
-                        const result = diceHelper.rollHandfull(handfull);
-                        setRollResult(result);
-                        setLastestHandfullRolled(handfull);
-                    }
-                }}>{'roll handfull: ' + handfull}</button>
-
-                <button onClick={() => {
-                    if (handfull) {
-                        setCustomHandfulls([...customHandfulls, handfull])
-                    }
-                }}>{'save handfull'}</button>
-
-                <button onClick={() => {
-                    setDeletionMode(!deletionMode);
-                }}><i style={{ color: '#aaa' }}>{!deletionMode ? 'deletion mode' : 'roll mode'}</i></button>
+                <button onClick={rollHandfull}>{'roll handfull'}</button>
+                <button onClick={saveCustomHandfull}>{'save handfull'}</button>
+                <button onClick={toggleDeletionMode}><i style={{ color: '#aaa' }}>{!deletionMode ? 'deletion mode' : 'roll mode'}</i></button>
             </div>
 
             <div className={'button-row'} style={{ display: 'flex', marginRight: 'auto' }}>
@@ -66,7 +40,6 @@ function DiceRoller() {
                 <span>{rollResult}</span>
             </>
             }
-
         </div>
     );
 }
