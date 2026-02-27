@@ -1,31 +1,31 @@
-import { useState } from 'react';
+import { observer } from 'mobx-react';
+import { caesarStore, setCyphertext } from '../stores/caesar-store';
 
-const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
+const a_asciiCode = 'a'.charCodeAt(0);
+const A_asciiCode = 'A'.charCodeAt(0);
 
-function rotateLetterInAlphabet(letter: string, shiftDistance: number) {
-  const currentIndex = ALPHABET.indexOf(letter);
-  const newIndex = (currentIndex + shiftDistance) % ALPHABET.length; // should be 26
+function rotateLetter(letter: string, shiftDistance: number): string {
+  const asciiCode = letter.charCodeAt(0);
+  const initial_asciiCode = letter.match(/[a-z]/g) ? a_asciiCode : A_asciiCode;
 
-  return ALPHABET[newIndex];
+  return String.fromCharCode(((asciiCode - initial_asciiCode + shiftDistance) % 26) + initial_asciiCode);
 }
 
 function shiftCaesar(cyphertext: string, offset: number): string {
   return cyphertext.split('').map((letter) => {
-    if (ALPHABET.includes(letter)) {
-      return rotateLetterInAlphabet(letter, offset);
-    }
-    return letter;
+    return letter.match(/[a-zA-Z]/g) ? rotateLetter(letter, offset) : letter;
   }).join('');
 }
 
-function getResults(cyphertext: string) {
-  if(cyphertext === '') {
-    return null;
+function decypher(cyphertext: string): React.JSX.Element[] {
+  if (cyphertext === '') {
+    return [];
   }
-  const plaintexts = [];
-  for (let i = 1; i < ALPHABET.length; i++) {
-    plaintexts.push(<div style={{display: 'flex'}}>
-      <div style={{textAlign: 'end', width: '20px', marginRight: '15px'}}>{i}</div>
+
+  const plaintexts: React.JSX.Element[] = [];
+  for (let i = 1; i < 26; i++) {
+    plaintexts.push(<div style={{ display: 'flex' }}>
+      <div style={{ textAlign: 'end', width: '20px', marginRight: '15px' }}>{i}</div>
       <div>{shiftCaesar(cyphertext, i)}</div>
     </div>);
   }
@@ -33,7 +33,7 @@ function getResults(cyphertext: string) {
 }
 
 function Caesar() {
-  const [cyphertext, setCyphertext] = useState('');
+  const {cyphertext} = caesarStore;
 
   return (
     <div style={{
@@ -45,11 +45,12 @@ function Caesar() {
         display: 'flex',
         flexDirection: 'column'
       }}>
-        <input placeholder={'cyphertext'} onChange={(e) => { setCyphertext(e.target.value) }}></input>
-        {getResults(cyphertext)}
+        <input placeholder={'cyphertext'} onChange={(e) => { setCyphertext(e.target.value)}} value={cyphertext}/>
+        {/* {plaintexts} */}
+        {decypher(cyphertext)}
       </div>
     </div>
   );
 }
 
-export default Caesar;
+export default observer(Caesar);

@@ -35,7 +35,7 @@ function DiceRoller() {
             flexDirection: 'column'
         }}>
             <div className={'button-row'} style={{ display: 'flex', marginRight: 'auto' }}>
-                <input placeholder={'example: d8+2d4+2'} onChange={(e) => { setHandfull(e.target.value) }}></input>
+                <input placeholder={'example: d8+2d4+2'} onChange={(e) => { setHandfull(e.target.value) }} value={handfull} />
             </div>
             <div className={'button-row'} style={{ display: 'flex', marginRight: 'auto', marginTop: '5px' }}>
                 <button onClick={() => {
@@ -45,25 +45,21 @@ function DiceRoller() {
                         setLastestHandfullRolled(handfull);
                     }
                 }}>{'roll handfull: ' + handfull}</button>
+
                 <button onClick={() => {
                     if (handfull) {
                         setCustomHandfulls([...customHandfulls, handfull])
                     }
                 }}>{'save handfull'}</button>
 
-
                 <button onClick={() => {
                     setDeletionMode(!deletionMode);
                 }}><i style={{ color: '#aaa' }}>{!deletionMode ? 'deletion mode' : 'roll mode'}</i></button>
             </div>
 
-
-
-
             <div className={'button-row'} style={{ display: 'flex', marginRight: 'auto' }}>
                 {userMadeButtons}
             </div>
-
 
             {lastestHandfullRolled && <>
                 <span style={{ color: '#aaa' }}>{`${lastestHandfullRolled} = `}</span>

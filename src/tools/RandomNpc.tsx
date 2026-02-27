@@ -1,6 +1,8 @@
-import { useState } from 'react';
 import { PROFESSIONS, SPECIES, MAGIC_TYPES, WEAPONS } from '../constants/npcValues';
+import { npcStore, setProfession, setSpecies, setSubspecies, setMagicType, setWeapon } from '../stores/npc-store';
+import { observer } from 'mobx-react';
 import './RandomNpc.css';
+
 
 // import chance from 'chance';
 // var randomName = chance().string();
@@ -8,11 +10,13 @@ const Chance = require('chance');
 const chance = new Chance();
 
 function RandomNpc() {
-    const [profession, setProfession] = useState('');
-    const [species, setSpecies] = useState('');
-    const [subspecies, setSubspecies] = useState('');
-    const [magicType, setMagicType] = useState('');
-    const [weapon, setWeapon] = useState('');
+    const {
+        profession,
+        species,
+        subspecies,
+        magicType,
+        weapon
+    } = npcStore;
 
     const subspeciesString = subspecies ? `(${subspecies})` : '';
     const speciesString = `${species}${subspeciesString}`;
@@ -56,4 +60,4 @@ function RandomNpc() {
     );
 }
 
-export default RandomNpc;
+export default observer(RandomNpc);
