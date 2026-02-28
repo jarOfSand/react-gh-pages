@@ -1,13 +1,16 @@
-function SidebarButton(props: {setActiveTool: Function, targetTool: string}) {
-    return <button onClick={() => props.setActiveTool(props.targetTool)}>{props.targetTool}</button>
+import { setActiveTool } from '../stores/tool-store';
+
+function SidebarButton(props: {targetTool: string}) {
+    return <button onClick={() => setActiveTool(props.targetTool)}>{props.targetTool}</button>
 }
 
-function Sidebar(props: {setActiveTool: Function}) {
+function Sidebar() {
     return (
         <div style={{display: 'flex', flexDirection: 'column', backgroundColor: '#ccc', height: '100vh', padding: '5px', width: '100px'}}>
-            <SidebarButton setActiveTool={props.setActiveTool} targetTool={'caesar'}/>
-            <SidebarButton setActiveTool={props.setActiveTool} targetTool={'npc'}/>
-            <SidebarButton setActiveTool={props.setActiveTool} targetTool={'dice'}/>
+            <SidebarButton targetTool={'caesar'}/>
+            <SidebarButton targetTool={'npc'}/>
+            <SidebarButton targetTool={'dice'}/>
+            <SidebarButton targetTool={'descrambler'}/>
         </div>
     );
 }

@@ -46,7 +46,6 @@ function Caesar() {
         flexDirection: 'column'
       }}>
         <input placeholder={'cyphertext'} onChange={(e) => { setCyphertext(e.target.value)}} value={cyphertext}/>
-        {/* {plaintexts} */}
         {decypher(cyphertext)}
       </div>
     </div>
