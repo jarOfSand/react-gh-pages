@@ -25,12 +25,11 @@ export const descramble = action(() => {
         if(scrambledText.length > 0 && word.length === scrambledText.length){
             const possibleMatch = word.split('').every((letter) => {
                 const letterIndex = scrambledArray.indexOf(letter);
-                if(letterIndex !== -1){ // scrambledText has letter
+                if(letterIndex !== -1){
                     scrambledArray.splice(letterIndex, 1);
                     return true;
-                } else {
-                    return false;
                 }
+                return false;
             })
             if(possibleMatch){
                 anagrams.push(word);
