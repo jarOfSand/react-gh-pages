@@ -1,11 +1,8 @@
-// 2d4+3
-// 1d20
-// 1d8+1d4+3
 var _ = require('lodash');
 const Chance = require('chance');
 const chance = new Chance();
 
-export function rollHandfull(handfullString: string): string {
+export function rollHandfull(handfullString: string): number[] {
     const handfullArray = handfullString.trim().split('+');
 
     const handfullResults = handfullArray.map((substring) => {
@@ -21,7 +18,5 @@ export function rollHandfull(handfullString: string): string {
         }
     });
 
-    const total: number = _.sum(_.flatten(handfullResults));
-
-    return total + ' [' + handfullResults + ']';
+    return _.flatten(handfullResults);
 }

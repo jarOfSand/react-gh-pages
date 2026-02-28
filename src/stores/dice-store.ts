@@ -1,44 +1,47 @@
 import { observable, action } from 'mobx';
 import * as diceHelper from '../helpers/dice-helper';
 
+var _ = require('lodash');
+
 type handfullObj = {
     name: string,
     value: string
 };
+
 type historyObj = {
-    rollDesc: string,
-    rollResult: string
+    name: string,
+    value: string,
+    result: number[],
+    total: number
 }
 
 type diceState = {
-    customHandfulls: string[],
     deletionMode: boolean,
-    handfull: string,
+    handfullValue: string,
     latestRollDesc: string,
     rollResult: string,
     handfullName: string,
-    customHandfulls_v2: handfullObj[],
+    customHandfulls: handfullObj[],
     history: historyObj[]
 };
 
 export const diceStore: diceState = observable({
-    customHandfulls: ['d6', 'd20'],
     deletionMode: false,
-    handfull: '',
+    handfullValue: '',
     handfullName: '',
     latestRollDesc: '',
     rollResult: '',
     history: [],
-    customHandfulls_v2: [
-        { name: 'lvl3 fireball', value: '8d6' },
+    customHandfulls: [
+        { name: 'fireball(level 3)', value: '8d6' },
         { name: '', value: 'd20' }
     ]
 });
 
 export const rollHandfull = action(() => {
-    const { handfull, handfullName } = diceStore;
-    if (handfull) {
-        handleRoll({ name: handfullName, value: handfull })
+    const { handfullValue, handfullName } = diceStore;
+    if (handfullValue) {
+        handleRoll({ name: handfullName, value: handfullValue })
     }
 });
 
@@ -47,54 +50,47 @@ function handleRoll(handfullObj: handfullObj) {
     const { history } = diceStore;
 
     const result = diceHelper.rollHandfull(value);
-    const rollDesc = name ? `${name}, ${value}` : value;
+    const total: number = _.sum(result);
 
-    diceStore.rollResult = result;
-    diceStore.latestRollDesc = rollDesc;
-
-    history.unshift({rollDesc, rollResult: result});
+    history.unshift({name, result, total, value});
     if(history.length > 10) {
         history.pop();
     }
 }
 
 export const handleCustomButtonClick = action((index: number) => {
-    const { deletionMode, customHandfulls_v2 } = diceStore;
+    const { deletionMode, customHandfulls } = diceStore;
 
     if (deletionMode) {
         deleteCustomHandfull(index);
     } else {
-        handleRoll(customHandfulls_v2[index]);
+        handleRoll(customHandfulls[index]);
     }
 })
 
 export const saveCustomHandfull = action(() => {
-    const { handfull, handfullName, customHandfulls_v2 } = diceStore;
-    if (handfull) {
-        diceStore.customHandfulls_v2 = [...customHandfulls_v2, { name: handfullName, value: handfull }]
+    const { handfullValue, handfullName, customHandfulls } = diceStore;
+    if (handfullValue) {
+        diceStore.customHandfulls = [...customHandfulls, { name: handfullName, value: handfullValue }]
     }
 });
 
 export function deleteCustomHandfull(index: number) {
-    const newCustomHandfulls = diceStore.customHandfulls_v2;
+    const newCustomHandfulls = diceStore.customHandfulls;
     newCustomHandfulls.splice(index, 1);
-    diceStore.customHandfulls_v2 = newCustomHandfulls;
+    diceStore.customHandfulls = newCustomHandfulls;
 }
 
 export const setHandfullName = action((handfullName: string) => {
     diceStore.handfullName = handfullName;
 });
 
-export const setCustomHandfulls = action((customHandfulls: string[]) => {
-    diceStore.customHandfulls = customHandfulls;
-});
-
 export const toggleDeletionMode = action(() => {
     diceStore.deletionMode = !diceStore.deletionMode;
 });
 
-export const setHandfull = action((handfull: string) => {
-    diceStore.handfull = handfull;
+export const setHandfullValue = action((handfullValue: string) => {
+    diceStore.handfullValue = handfullValue;
 });
 
 export const setRollResult = action((rollResult: string) => {

@@ -1,11 +1,8 @@
 import { PROFESSIONS, SPECIES, MAGIC_TYPES, WEAPONS } from '../constants/npcValues';
 import { npcStore, setProfession, setSpecies, setSubspecies, setMagicType, setWeapon } from '../stores/npc-store';
 import { observer } from 'mobx-react';
-import './RandomNpc.css';
+import '../css/RandomNpc.css';
 
-
-// import chance from 'chance';
-// var randomName = chance().string();
 const Chance = require('chance');
 const chance = new Chance();
 
@@ -37,7 +34,7 @@ function RandomNpc() {
             display: 'flex',
             flexDirection: 'column'
         }}>
-            <div className={'button-row'} style={{ display: 'flex', marginRight: 'auto' }}>
+            <div className={'npc-button-row'} style={{ display: 'flex', marginRight: 'auto' }}>
                 <button onClick={() => generateNpcHandler()}>{'generate'}</button>
 
                 {species && <button style={{ marginRight: 'auto' }} onClick={() => {
