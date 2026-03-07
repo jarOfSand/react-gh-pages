@@ -1,4 +1,4 @@
-import { diceStore, handleCustomButtonClick, saveCustomHandfull, rollHandfull, setHandfullValue, toggleDeletionMode, setHandfullName } from '../stores/dice-store';
+import { diceStore, clearHistory, handleCustomButtonClick, saveCustomHandfull, rollHandfull, setHandfullValue, toggleDeletionMode, setHandfullName } from '../stores/dice-store';
 import { observer } from 'mobx-react';
 import '../css/DiceRoller.css';
 
@@ -43,6 +43,8 @@ function DiceRoller() {
                 <button onClick={rollHandfull}>{'roll handfull'}</button>
                 <button onClick={saveCustomHandfull}>{'save handfull'}</button>
                 <button onClick={toggleDeletionMode}>{!deletionMode ? '❌' : '✅'}</button>
+                <button onClick={clearHistory}>{'🗑'}</button>
+                
             </div>
 
             <div className={'dice-button-row'}>

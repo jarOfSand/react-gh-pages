@@ -98,7 +98,8 @@ export const WEAPONS = [
     'trowel',
     'brick on a rope',
     'walking stick',
-    'the nearest rock'
+    'the nearest rock',
+    'bottle of liquor'
 ]
 
 export const MAGIC_TYPES = [
@@ -196,6 +197,10 @@ export const PROFESSIONS = [
     'embassador',
     'farmer',
     'ferry operator',
+    'falconer',
+    'beekeeper',
+    'maid',
+    'butler',
     'fisher',
     'fishmonger',
     'fletcher',
@@ -207,7 +212,8 @@ export const PROFESSIONS = [
     'hayward',
     'herbalist',
     'horsemonger',
-    'hunter',
+    'hunter(small game)',
+    'hunter(big game)',
     'innkeeper',
     'investigator',
     'janitor',
