@@ -17,6 +17,7 @@ type historyObj = {
 
 type diceState = {
     deletionMode: boolean,
+    critMode: boolean,
     handfullValue: string,
     latestRollDesc: string,
     rollResult: string,
@@ -27,6 +28,7 @@ type diceState = {
 
 export const diceStore: diceState = observable({
     deletionMode: false,
+    critMode: false,
     handfullValue: '',
     handfullName: '',
     latestRollDesc: '',
@@ -42,20 +44,22 @@ export const clearHistory = action(() => {
     diceStore.history = [];
     diceStore.handfullValue = '';
     diceStore.handfullName = '';
+    
 });
+
 
 export const rollHandfull = action(() => {
     const { handfullValue, handfullName } = diceStore;
     if (handfullValue) {
-        handleRoll({ name: handfullName, value: handfullValue })
+        handleRoll({ name: handfullName, value: handfullValue });
     }
 });
 
 function handleRoll(handfullObj: handfullObj) {
     const { name, value } = handfullObj;
-    const { history } = diceStore;
+    const { history, critMode } = diceStore;
 
-    const result = diceHelper.rollHandfull(value);
+    const result = diceHelper.rollHandfull(value, critMode);
     const total: number = _.sum(result);
 
     history.unshift({name, result, total, value});
@@ -93,6 +97,10 @@ export const setHandfullName = action((handfullName: string) => {
 
 export const toggleDeletionMode = action(() => {
     diceStore.deletionMode = !diceStore.deletionMode;
+});
+
+export const toggleCrit = action(() => {
+    diceStore.critMode = !diceStore.critMode;
 });
 
 export const setHandfullValue = action((handfullValue: string) => {
