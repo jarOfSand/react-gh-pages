@@ -38,6 +38,10 @@ export const diceStore: diceState = observable({
     ]
 });
 
+export const clearHistory = action(() => {
+    diceStore.history = [];
+});
+
 export const rollHandfull = action(() => {
     const { handfullValue, handfullName } = diceStore;
     if (handfullValue) {
