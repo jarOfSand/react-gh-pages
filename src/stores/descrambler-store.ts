@@ -1,5 +1,5 @@
 import {observable, action} from 'mobx';
-import { commonwords } from '../constants/10k_english';
+import {anagrams} from '../constants/anagramMap';
 
 type descramblerState = {
     scrambledText: string
@@ -17,25 +17,11 @@ export const setScrambledText = action((scrambledText: string) => {
 
 export const descramble = action(() => {
     const {scrambledText} = descramblerStore;
-    const anagrams: string[] = [];
 
-    commonwords.forEach((word) => {
-        const scrambledArray = scrambledText.split('');
+    const key = scrambledText.split('').sort().join(''); // sorted letters
 
-        if(scrambledText.length > 0 && word.length === scrambledText.length){
-            const possibleMatch = word.split('').every((letter) => {
-                const letterIndex = scrambledArray.indexOf(letter);
-                if(letterIndex !== -1){
-                    scrambledArray.splice(letterIndex, 1);
-                    return true;
-                }
-                return false;
-            })
-            if(possibleMatch){
-                anagrams.push(word);
-            }
-        }
-    });
+    const anagramMap: {[key: string]: string[]} = anagrams;
+    const matches: string[] = anagramMap[key];
 
-    descramblerStore.possibleMatches = anagrams.length > 0 ? anagrams : ['no match found'];
+    descramblerStore.possibleMatches = matches ? matches : ['no matches found'];
 });

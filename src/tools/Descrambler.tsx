@@ -2,7 +2,7 @@ import { observer } from 'mobx-react';
 import { descramblerStore, setScrambledText, descramble } from '../stores/descrambler-store';
 
 function Descrambler() {
-  const {scrambledText, possibleMatches} = descramblerStore;
+  const { scrambledText, possibleMatches } = descramblerStore;
 
   return (
     <div style={{
@@ -14,8 +14,10 @@ function Descrambler() {
         display: 'flex',
         flexDirection: 'column'
       }}>
-        <input placeholder={'scrambled text'} onChange={(e) => { setScrambledText(e.target.value)}} value={scrambledText}/>
-        <button onClick={descramble}>{'descramble'}</button>
+        <input placeholder={'scrambled text'} onChange={(e) => {
+          setScrambledText(e.target.value);
+          descramble();
+        }} value={scrambledText} />
         <div>{`${possibleMatches}`}</div>
       </div>
     </div>
