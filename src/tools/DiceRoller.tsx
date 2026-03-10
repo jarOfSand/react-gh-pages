@@ -39,7 +39,7 @@ function DiceRoller() {
                 <input placeholder={'ex: fire sword or empty'} onChange={(e) => { setHandfullName(e.target.value) }} value={handfullName} />
                 <input placeholder={'ex: d8+2d4+3'} onChange={(e) => { setHandfullValue(e.target.value) }} value={handfullValue} />
             </div>
-            <div className={'dice-button-row'} style={{}}>
+            <div className={'dice-button-row'} style={{marginBottom: '10px'}}>
                 <button onClick={rollHandfull}>{'roll'}</button>
                 <button onClick={saveCustomHandfull}>{'save'}</button>
                 <button onClick={clearHistory}>{'clear'}</button>
