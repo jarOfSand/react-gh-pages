@@ -10,6 +10,7 @@ function Sidebar() {
             <SidebarButton targetTool={'caesar'}/>
             <SidebarButton targetTool={'npc'}/>
             <SidebarButton targetTool={'dice'}/>
+            <SidebarButton targetTool={'dice import'}/>
             <SidebarButton targetTool={'descrambler'}/>
         </div>
     );

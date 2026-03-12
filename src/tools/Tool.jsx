@@ -1,15 +1,18 @@
+import { observer } from 'mobx-react';
+
 import Caesar from './Caesar';
-import DiceRoller from './DiceRoller';
 import RandomNpc from './RandomNpc';
+import DiceRoller from './dice/DiceRoller';
+import DiceImporterExporter from './dice/DiceImporterExporter';
 import Descrambler from './Descrambler';
 
-import { observer } from 'mobx-react';
 import { toolStore } from '../stores/tool-store';
 
 const TOOLS = {
     'caesar': <Caesar/>,
     'npc': <RandomNpc/>,
     'dice': <DiceRoller/>,
+    'dice import': <DiceImporterExporter/>,
     'descrambler': <Descrambler/>,
 }
 

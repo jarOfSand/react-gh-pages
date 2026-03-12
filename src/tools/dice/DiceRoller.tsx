@@ -1,6 +1,6 @@
-import { diceStore, toggleCrit, clearHistory, handleCustomButtonClick, saveCustomHandfull, rollHandfull, setHandfullValue, toggleDeletionMode, setHandfullName } from '../stores/dice-store';
+import { diceStore, exportHandfulls, toggleCrit, clearHistory, handleCustomButtonClick, saveCustomHandfull, rollHandfull, setHandfullValue, toggleDeletionMode, setHandfullName } from '../../stores/dice-store';
 import { observer } from 'mobx-react';
-import '../css/DiceRoller.css';
+import '../../css/DiceRoller.css';
 
 function DiceRoller() {
     const { history, critMode, customHandfulls, deletionMode, handfullValue, handfullName } = diceStore;
@@ -45,6 +45,7 @@ function DiceRoller() {
                 <button onClick={clearHistory}>{'clear'}</button>
                 <button onClick={toggleDeletionMode}>{!deletionMode ? '❌' : '✅'}</button>
                 <button onClick={toggleCrit}>{!critMode ? 'crit' : 'not crit'}</button>
+                <button onClick={exportHandfulls}>{'export to clipboard'}</button>
             </div>
 
             <div className={'dice-button-row'}>

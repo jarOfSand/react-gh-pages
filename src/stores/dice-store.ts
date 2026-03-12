@@ -16,6 +16,8 @@ type historyObj = {
 }
 
 type diceState = {
+    importExportMode: boolean,
+    importString: string,
     deletionMode: boolean,
     critMode: boolean,
     handfullValue: string,
@@ -27,6 +29,8 @@ type diceState = {
 };
 
 export const diceStore: diceState = observable({
+    importExportMode: false,
+    importString: '',
     deletionMode: false,
     critMode: false,
     handfullValue: '',
@@ -44,7 +48,6 @@ export const clearHistory = action(() => {
     diceStore.history = [];
     diceStore.handfullValue = '';
     diceStore.handfullName = '';
-    
 });
 
 
@@ -103,10 +106,37 @@ export const toggleCrit = action(() => {
     diceStore.critMode = !diceStore.critMode;
 });
 
+export const toggleImportExportMode = action(() => {
+    diceStore.importExportMode = !diceStore.importExportMode;
+});
+
 export const setHandfullValue = action((handfullValue: string) => {
     diceStore.handfullValue = handfullValue;
 });
 
 export const setRollResult = action((rollResult: string) => {
     diceStore.rollResult = rollResult;
+});
+
+export const exportHandfulls = action(() => {
+    const exportArray: string[] = diceStore.customHandfulls.map(handfull => {
+        return `${handfull.name}|${handfull.value}` ;
+    });
+    const exportString = exportArray.join(',');
+    
+    navigator.clipboard.writeText(exportString);
+});
+
+export const setImportString = action((importString: string) => {
+    diceStore.importString = importString;
+});
+
+export const importHandfulls = action(() => {
+    const {importString} = diceStore;
+    const handfulls: handfullObj[] = importString.split(',').map(handfullString => {
+        const [name, value] = handfullString.split('|');
+        return {name, value};
+    });
+
+    diceStore.customHandfulls = handfulls;
 });
