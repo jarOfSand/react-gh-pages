@@ -4,7 +4,6 @@ import Caesar from './Caesar';
 import RandomNpc from './RandomNpc';
 import DiceRoller from './dice/DiceRoller';
 import DiceImporterExporter from './dice/DiceImporterExporter';
-import Descrambler from './Descrambler';
 
 import { toolStore } from '../stores/tool-store';
 
@@ -13,7 +12,6 @@ const TOOLS = {
     'npc': <RandomNpc/>,
     'dice': <DiceRoller/>,
     'dice import': <DiceImporterExporter/>,
-    'descrambler': <Descrambler/>,
 }
 
 function Tool() {
