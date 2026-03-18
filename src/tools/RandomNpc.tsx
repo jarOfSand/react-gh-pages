@@ -47,7 +47,8 @@ function RandomNpc() {
             </div>
 
             {species && <div style={{ marginTop: '10px' }}>{speciesString}</div>}
-            {profession && <div>{profession}</div>}
+            {profession && <div>{profession.name}</div>}
+            {profession && <div>{profession.item}</div>}
 
             {weapon && <div style={{ marginTop: '10px' }}>{weapon}</div>}
             {magicType && <div>{`${magicType} magic`}</div>}

@@ -1,22 +1,27 @@
 import {observable, action} from 'mobx';
 
 type npcState = {
-    profession: string,
+    profession: profession | null,
     species: string,
     subspecies: string,
     magicType: string,
     weapon: string,
 }
 
+type profession = {
+    name: string,
+    item: string
+}
+
 export const npcStore: npcState = observable({
-    profession: '',
+    profession: null,
     species: '',
     subspecies: '',
     magicType: '',
     weapon: '',
 });
 
-export const setProfession = action((profession: string) => {
+export const setProfession = action((profession: profession) => {
     npcStore.profession = profession;
 });
 
