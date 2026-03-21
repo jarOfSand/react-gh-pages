@@ -48,9 +48,9 @@ function RandomNpc() {
 
             {species && <div style={{ marginTop: '10px' }}>{speciesString}</div>}
             {profession && <div>{profession.name}</div>}
-            {profession && <div>{profession.item}</div>}
 
             {weapon && <div style={{ marginTop: '10px' }}>{weapon}</div>}
+            {profession && <div>{profession.item}</div>}
             {magicType && <div>{`${magicType} magic`}</div>}
 
             {species && <a style={{ marginRight: 'auto', marginTop: '10px' }} target={'_blank'} href={`https://dnd5e.wikidot.com/lineage:${species}`}>{'lineage:wiki'}</a>}
