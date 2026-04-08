@@ -4,6 +4,8 @@ import Caesar from './Caesar';
 import RandomNpc from './RandomNpc';
 import DiceRoller from './dice/DiceRoller';
 import DiceImporterExporter from './dice/DiceImporterExporter';
+import Creature from './Creature';
+import CreatureV2 from './CreatureV2';
 
 import { toolStore } from '../stores/tool-store';
 
@@ -12,6 +14,7 @@ const TOOLS = {
     'npc': <RandomNpc/>,
     'dice': <DiceRoller/>,
     'dice import': <DiceImporterExporter/>,
+    'creature': <CreatureV2/>,
 }
 
 function Tool() {

@@ -1,6 +1,5 @@
-import { diceStore, importHandfulls, setImportString } from '../../stores/dice-store';
+import { diceStore, clearImportString, importHandfulls, setImportString } from '../../stores/dice-store';
 import { observer } from 'mobx-react';
-import HandfullButton from './HandfullButton';
 
 function DiceImporterExporter() {
     const { importString } = diceStore;
@@ -14,9 +13,15 @@ function DiceImporterExporter() {
             <div style={{ display: 'flex', flexDirection: 'column', marginRight: 'auto' }}>
                 <input placeholder={'paste import here'} onChange={(e) => { setImportString(e.target.value) }} value={importString} />
             </div>
-            <div className={'dice-button-row'} style={{marginBottom: '10px'}}>
-                <button onClick={importHandfulls}>{'import'}</button>
+            <div style={{display: 'flex', marginRight: 'auto'}}>
+                <div className={'dice-button-row'} style={{marginBottom: '10px'}}>
+                    <button onClick={importHandfulls}>{'import'}</button>
+                </div>
+                <div className={'dice-button-row'} style={{ marginBottom: '10px' }}>
+                    <button onClick={clearImportString}>{'clear'}</button>
+                </div>
             </div>
+
         </div>
     );
 }

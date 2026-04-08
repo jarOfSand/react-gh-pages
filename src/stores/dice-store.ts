@@ -106,7 +106,7 @@ export const clearHistory = action(() => {
 
 export const rollTempHandfull = action(() => {
     const { tempDiceString, tempName: handfullName } = diceStore;
-    
+
     if (tempDiceString) {
         const tempHandfull = new handfull(handfullName, tempDiceString);
         const rollHistory = tempHandfull.roll();
@@ -180,12 +180,22 @@ export const setImportString = action((importString: string) => {
     diceStore.importString = importString;
 });
 
+export const clearImportString = action(() => {
+    diceStore.importString = '';
+});
+
 export const importHandfulls = action(() => {
     const { importString } = diceStore;
-    const handfulls: handfull[] = importString.split(',').map(diceString => {
-        const [name, value] = diceString.split('|');
-        return new handfull(name, value);
-    });
 
-    diceStore.customHandfulls = handfulls;
+    try {
+        const handfulls: handfull[] = importString.split(',').map(diceString => {
+            const [name, value] = diceString.split('|');
+            return new handfull(name, value);
+        });
+
+        diceStore.customHandfulls = handfulls;
+    } catch {
+        // toast failure
+    }
+
 });

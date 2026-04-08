@@ -5,7 +5,7 @@ import Tool from './tools/Tool';
 function App() {
 
   return (
-    <div style={{ display: 'flex', width: '100vw' }}>
+    <div style={{ display: 'flex'}}>
       <Sidebar/>
       <Tool />
     </div>
