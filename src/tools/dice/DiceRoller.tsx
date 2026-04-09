@@ -8,8 +8,8 @@ import RollResultsQueue from './RollResultsQueue';
 function DiceRoller() {
     const { customHandfulls, critMode, deletionMode, tempDiceString, tempName: handfullName } = diceStore;
 
-    const buttons = customHandfulls.map((handfull: handfull, index: number) => {
-        return <HandfullButton handfull={handfull} index={index} key={index} />;
+    const buttons = customHandfulls.map((dice: handfull, index: number) => {
+        return <HandfullButton dice={dice} index={index} key={index} />;
     });
 
     return (

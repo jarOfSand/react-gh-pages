@@ -13,7 +13,7 @@ export class handfull {
     staticMods: number[];
     dice: die[];
 
-    constructor(name = '', diceString: string) {
+    constructor(diceString: string, name = '') {
         const diceArray = diceString.trim().split('+');
         const dice: die[] = [];
         const staticMods: number[] = [];
@@ -84,8 +84,8 @@ type diceState = {
 export const diceStore: diceState = observable({
     critMode: false,
     customHandfulls: [
-        new handfull('shortbow(atk)', 'd20+4'),
-        new handfull('shortbow(dmg)', 'd6+4'),
+        new handfull('d20+4', 'shortbow(atk)'),
+        new handfull('d6+4', 'shortbow(dmg)'),
     ],
     deletionMode: false,
     history: [],
@@ -105,10 +105,10 @@ export const clearHistory = action(() => {
 
 
 export const rollTempHandfull = action(() => {
-    const { tempDiceString, tempName: handfullName } = diceStore;
+    const { tempDiceString, tempName } = diceStore;
 
     if (tempDiceString) {
-        const tempHandfull = new handfull(handfullName, tempDiceString);
+        const tempHandfull = new handfull(tempDiceString, tempName);
         const rollHistory = tempHandfull.roll();
         updateHistory(rollHistory);
     }
@@ -123,21 +123,21 @@ export function updateHistory(result: historyObj) {
     }
 }
 
-export const handleCustomButtonClick = action((index: number) => {
-    const { deletionMode, customHandfulls, critMode } = diceStore;
+export const handleCustomButtonClick = action((dice: handfull, index: number) => {
+    const { deletionMode, critMode } = diceStore;
 
     if (deletionMode) {
         deleteCustomHandfull(index);
     } else {
-        const rollHistory = customHandfulls[index].roll(critMode);
+        const rollHistory = dice.roll(critMode);
         updateHistory(rollHistory);
     }
 })
 
 export const saveHandfull = action(() => {
-    const { tempDiceString, tempName: handfullName, customHandfulls } = diceStore;
+    const { tempDiceString, tempName, customHandfulls } = diceStore;
     if (tempDiceString) {
-        diceStore.customHandfulls = [...customHandfulls, new handfull(handfullName, tempDiceString)]
+        diceStore.customHandfulls = [...customHandfulls, new handfull(tempDiceString, tempName)]
     }
 });
 
@@ -190,7 +190,7 @@ export const importHandfulls = action(() => {
     try {
         const handfulls: handfull[] = importString.split(',').map(diceString => {
             const [name, value] = diceString.split('|');
-            return new handfull(name, value);
+            return new handfull(value, name);
         });
 
         diceStore.customHandfulls = handfulls;
