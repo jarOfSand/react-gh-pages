@@ -46,11 +46,7 @@ export class handfull {
             }
         });
 
-        console.log(allDiceResults, this.staticMods);
         const result = allDiceResults.concat(this.staticMods);
-        console.log(result);
-        console.log('');
-
 
         return {
             name: this.name,
