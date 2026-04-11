@@ -11,7 +11,7 @@ const RollResultsQueue = () => {
             resultString,
         ].join(' ');
 
-        return (<div style={index === 0 ? { marginBottom: '15px' } : {}}>
+        return (<div style={index === 0 ? { marginBottom: '15px' } : {}} key={index}>
             <span style={{ marginLeft: 'auto', width: '40px', marginRight: '5px' }}>{total}</span>
             <span style={{ color: '#aaa', marginRight: '5px', fontSize: 'smaller' }}>{subtext}</span>
         </div>)

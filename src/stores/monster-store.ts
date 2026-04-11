@@ -18,7 +18,6 @@ export const monsterStore: monsterState = observable({
 });
 
 export const setActiveMonster = action(async (activeMonsterIndex: string) => {
-    console.log('setactive:', activeMonsterIndex)
     monsterStore.activeMonster = await getMonsterData(activeMonsterIndex);
 });
 

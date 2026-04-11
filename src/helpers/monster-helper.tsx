@@ -1,12 +1,11 @@
 import { handfull } from '../stores/dice-store';
 import DiceButton from '../tools/dice/DiceButton';
 
-const MOD_REGEXP = /^[+-]\d+/; // matches +3, +12, -3, -10
-// const COMBO_REGEXP = /[\s\(]?([+-]\d+|(?:(?:\d+d\d+)(?:\s?\+\s?\d+d\d+)*(?:\s?\+\s?\d+)*))/g
-const COMBO_REGEXP =/(\d+d\d+([+-]\d+)?|[+-]\d+)/g
+const MOD_REGEXP = /^[+-]\d+[^d]/;
+const COMBO_REGEXP = /((\d+d\d+)(\s?[-+]\s?((\d+d\d+)|(\d+))*)*|[+-]\d+[^d])/g
 
 function getButtonMatches(text: string): string[] {
-    return [...text.matchAll(COMBO_REGEXP)].map(match => match[1]);
+    return [...text.matchAll(COMBO_REGEXP)].map(match => match[0]);
 }
 
 function isD20(match: string): boolean {
@@ -27,7 +26,7 @@ export function splitTextAroundMatches(text: string): React.JSX.Element[] {
         const dice = isD20(match) ? new handfull(`1d20${match}`, match) : new handfull(match);
 
         output.push(<span>{plaintext}</span>)
-        output.push(<DiceButton dice={dice}/>)
+        output.push(<DiceButton dice={dice} key={dice.id}/>)
 
         remainingText = remainder;
     });

@@ -21,7 +21,7 @@ function DiceRoller() {
         }}>
             <div style={{ display: 'flex', flexDirection: 'column', marginRight: 'auto' }}>
                 <input placeholder={'ex: fire sword or empty'} onChange={(e) => { setHandfullName(e.target.value) }} value={handfullName} />
-                <input placeholder={'ex: d8+2d4+3'} onChange={(e) => { setTempDiceString(e.target.value) }} value={tempDiceString} />
+                <input placeholder={'ex: 1d8+2d4+3'} onChange={(e) => { setTempDiceString(e.target.value) }} value={tempDiceString} />
             </div>
             <div className={'dice-button-row'} style={{marginBottom: '10px'}}>
                 <button onClick={rollTempHandfull}>{'roll'}</button>

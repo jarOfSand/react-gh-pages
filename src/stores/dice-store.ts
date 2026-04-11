@@ -6,7 +6,49 @@ const chance = new Chance();
 type die = {
     size: number;
     quantity: number;
+    operation: 'add' | 'subtract';
 }
+
+// const MOD_REGEX = /([+-]\s?\d+)/g;
+const MOD_REGEX = /([+-]\s?\d+)([^d]|$)/g
+const LATTER_DICE_REGEX = /[+-]\s?\d+d\d+/g;
+
+const FIRST_DICE_REGEX = /^\d+d\d+/;
+
+function getModMatches(text: string): number[] {
+    const matches = [...text.matchAll(MOD_REGEX)].map(match => match[0]);
+    const matchesWithoutWhitespace = matches.map(match => { return match.replaceAll(' ', '') })
+    const numberMods = matchesWithoutWhitespace.map(match => { return parseInt(match) });
+
+    return numberMods;
+}
+
+function getDie(dieString: string, operation: 'add' | 'subtract'): die {
+    const [diceQuantString, diceSizeString] = dieString.split('d');
+    return {
+        operation,
+        size: parseInt(diceSizeString),
+        quantity: parseInt(diceQuantString)
+    }
+}
+
+function getDiceMatches(text: string): die[] {
+    const firstMatch = text.match(FIRST_DICE_REGEX)?.[0];
+    const latterMatches = [...text.matchAll(LATTER_DICE_REGEX)].map(match => match[0].replace(' ', ''));
+
+    const latterDice: die[] = latterMatches.map(match => {
+        const operation = match.charAt(0) === '+' ? 'add' : 'subtract';
+
+        return getDie(match.slice(1), operation)
+    });
+
+    if (firstMatch) {
+        const firstDie: die = getDie(firstMatch, 'add');
+        return [firstDie, ...latterDice];
+    }
+    return latterDice;
+}
+
 export class handfull {
     name: string;
     diceString: string;
@@ -15,25 +57,8 @@ export class handfull {
     id: string;
 
     constructor(diceString: string, name = '') {
-        const diceArray = diceString.trim().split('+');
-        const dice: die[] = [];
-        const staticMods: number[] = [];
-
-        diceArray.forEach((substring) => {
-            if (substring.includes('d')) {
-                const [diceQuantString, diceSizeString] = substring.split('d').map(str => str.trim());
-
-                const quantity = (diceQuantString === '' ? 1 : parseInt(diceQuantString));
-                const size = parseInt(diceSizeString);
-
-                dice.push({size, quantity});
-            } else {
-                staticMods.push(parseInt(substring.trim()));
-            }
-        });
-
-        this.staticMods = staticMods;
-        this.dice = dice;
+        this.staticMods = getModMatches(diceString);
+        this.dice = getDiceMatches(diceString);
         this.name = name;
         this.diceString = diceString;
         this.id = chance.guid();
@@ -43,8 +68,9 @@ export class handfull {
         const allDiceResults: number[] = [];
         this.dice.forEach(die => {
             const qty = die.quantity * (isCrit ? 2 : 1);
-            for(let i = 0; i < qty; i++) {
-                allDiceResults.push(chance.natural({ min: 1, max: die.size }))
+            for (let i = 0; i < qty; i++) {
+                const result = chance.natural({ min: 1, max: die.size }) * (die.operation === 'add' ? 1 : -1);
+                allDiceResults.push(result)
             }
         });
 
@@ -79,14 +105,16 @@ type diceState = {
     tempName: string,
 };
 
-const initialDice1 = new handfull('d20+4', 'shortbow(atk)');
-const initialDice2 = new handfull('d6+4', 'shortbow(dmg)')
+const initialDice1 = new handfull('1d20+4');
+const initialDice2 = new handfull('2d6-1d8')
+const initialDice3 = new handfull('2d6-4')
 
 export const diceStore: diceState = observable({
     critMode: false,
     customHandfulls: new Map<string, handfull>([
         [initialDice1.id, initialDice1],
-        [initialDice2.id, initialDice2]
+        [initialDice2.id, initialDice2],
+        [initialDice3.id, initialDice3]
     ]),
     deletionMode: false,
     history: [],
@@ -170,7 +198,7 @@ export const setTempDiceString = action((tempDiceString: string) => {
 
 export const exportHandfulls = action(() => {
     const exportArray: string[] = [];
-    
+
     diceStore.customHandfulls.forEach(handfull => {
         exportArray.push(`${handfull.name}|${handfull.diceString}`);
     });

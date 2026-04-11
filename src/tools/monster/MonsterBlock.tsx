@@ -2,39 +2,58 @@ import { observer } from 'mobx-react';
 import { monsterStore } from '../../stores/monster-store';
 import DiceButton from '../dice/DiceButton';
 import { handfull } from '../../stores/dice-store';
+import { splitTextAroundMatches } from '../../helpers/monster-helper';
 
 function statRectangle(statName: string, statValue: number) {
     const modifier = Math.ceil((statValue - 10) / 2);
     const modifierString = modifier >= 0 ? `+${modifier}` : `${modifier}`;
-    
-    return <div style={{border: 'solid 1px black'}}>
+    return <div style={{ border: 'solid 1px black', width: '50px' }}>
         <div>{statName}</div>
         <div>{statValue}</div>
-        <div>{modifierString}</div>
+        <DiceButton dice={new handfull('1d20' + modifierString, modifierString)} />
     </div>
+}
+
+type action = {
+    name: string,
+    desc: string
+}
+
+function getActions(actions: action[]) {
+    const actionRows = actions.map(action => {
+        return <div style={{marginBottom: '15px'}}>
+            <span style={{fontWeight: 'bold', marginRight: '5px'}}>{action.name}</span>
+                {splitTextAroundMatches(action.desc)}
+            </div>
+    });
+
+    return (<div>
+        {actionRows}
+    </div>);
 }
 
 function MonsterBlock(): React.JSX.Element | null {
     const { activeMonster } = monsterStore;
 
-    if(!activeMonster) {
+    if (!activeMonster) {
         return null;
     }
 
-    console.log(activeMonster.hit_points_roll);
-
-    return <div style={{marginBottom: '10px'}}>
+    return <div style={{ marginBottom: '10px' }}>
         <p>{activeMonster.name}</p>
-        <p>{activeMonster.size}</p>
-        <p>{activeMonster.type}</p>
-        <p>{activeMonster.hit_points}</p>
-        <p>{activeMonster.hit_dice}</p>
-        <p>{activeMonster.hit_points_roll}</p>
-        <DiceButton dice={new handfull(activeMonster.hit_points_roll)} />
+        <p>{`${activeMonster.size} ${activeMonster.type}`}</p>
+        <p>{`${activeMonster.hit_points} hp `}<DiceButton dice={new handfull(activeMonster.hit_points_roll)} /></p>
 
-        <div style={{display: 'flex', flexDirection: 'row'}}>
+        <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '15px'}}>
             {statRectangle('STR', activeMonster.strength)}
+            {statRectangle('DEX', activeMonster.dexterity)}
+            {statRectangle('CON', activeMonster.constitution)}
+            {statRectangle('INT', activeMonster.intelligence)}
+            {statRectangle('WIS', activeMonster.wisdom)}
+            {statRectangle('CHA', activeMonster.charisma)}
         </div>
+
+        {getActions(activeMonster.actions)}
     </div>;
 }
 
