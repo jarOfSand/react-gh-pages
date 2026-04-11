@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import { creatureStore } from '../stores/creature-store';
+import { monsterStore } from '../stores/monster-store';
 // import '../css/Statblock.css';
 
 // https://www.dnd5eapi.co/
@@ -146,8 +146,8 @@ const API_ACOLYTE = {
     "reactions": []
 };
 
-function Creature() {
-    const { activeCreature } = creatureStore;
+function Monster() {
+    const {activeMonster} = monsterStore;
 
     return (
         <div style={{
@@ -188,7 +188,7 @@ function Creature() {
     );
 }
 
-export default observer(Creature);
+export default observer(Monster);
 
 {/* <div class="stat-block">
 	<hr class="orange-border" />

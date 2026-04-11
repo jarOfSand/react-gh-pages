@@ -12,7 +12,7 @@ function Sidebar() {
             <div style={{marginTop: '10px', fontSize: 'smaller'}}>{'dm tools'}</div>
             <SidebarButton targetTool={'npc'}/>
             <SidebarButton targetTool={'caesar'}/>
-            <SidebarButton targetTool={'creature'}/>
+            <SidebarButton targetTool={'monster'}/>
             {/* <div style={{marginTop: '10px', fontSize: 'smaller'}}>{'pc tools'}</div> */}
         </div>
     );

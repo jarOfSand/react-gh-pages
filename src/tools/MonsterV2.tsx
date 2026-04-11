@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react';
-import { creatureStore } from '../stores/creature-store';
+import { monsterStore, setActiveMonster } from '../stores/monster-store';
 import HandfullButton from './dice/HandfullButton';
 import { handfull } from '../stores/dice-store';
 import RollResultsQueue from './dice/RollResultsQueue';
+import { monsterListItem } from '../stores/monster-store';
 
 // const hellhoundBite = `Bite. Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 7 (1d8 + 3) piercing damage plus 7 (2d6) fire damage.`;
 
@@ -89,14 +90,23 @@ function splitTextAroundMatches(text: string): React.JSX.Element[] {
     return output;
 }
 
-function CreatureV2() {
-    const { activeCreature } = creatureStore;
+function getMonsterSelector(monsterList: monsterListItem[], setActiveMonster: Function) {
+    const options = monsterList.map((monsterListItem) => {
+        return <option value={monsterListItem.index}>{monsterListItem.name}</option>
+    });
+
+    return <select name={'monster'} onChange={(e) => setActiveMonster(e.target.value)}>{options}</select>
+}
+
+function MonsterV2() {
+    const { monsterList, activeMonster } = monsterStore;
     
     return (
         <div>
-            <p>{splitTextAroundMatches(dragon)}</p>
+            {getMonsterSelector(monsterList, setActiveMonster)}
+            <p>{activeMonster && splitTextAroundMatches(JSON.stringify(activeMonster))}</p>
             <RollResultsQueue/>
         </div>);
 }
 
-export default observer(CreatureV2);
+export default observer(MonsterV2);
