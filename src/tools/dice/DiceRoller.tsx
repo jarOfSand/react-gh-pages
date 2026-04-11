@@ -2,14 +2,15 @@ import { diceStore, exportHandfulls, toggleCrit, clearHistory, saveHandfull, rol
 import { observer } from 'mobx-react';
 import '../../css/DiceRoller.css';
 import { handfull } from '../../stores/dice-store';
-import HandfullButton from '../../tools/dice/HandfullButton'
+import DiceButton from './DiceButton'
 import RollResultsQueue from './RollResultsQueue';
 
 function DiceRoller() {
     const { customHandfulls, critMode, deletionMode, tempDiceString, tempName: handfullName } = diceStore;
 
-    const buttons = customHandfulls.map((dice: handfull, index: number) => {
-        return <HandfullButton dice={dice} index={index} key={index} />;
+    const buttons: React.JSX.Element[] = [];
+    customHandfulls.forEach((dice: handfull) => {
+        buttons.push(<DiceButton dice={dice} key={dice.id} removable={true} />);
     });
 
     return (

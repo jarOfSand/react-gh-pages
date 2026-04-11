@@ -12,6 +12,7 @@ export class handfull {
     diceString: string;
     staticMods: number[];
     dice: die[];
+    id: string;
 
     constructor(diceString: string, name = '') {
         const diceArray = diceString.trim().split('+');
@@ -35,6 +36,7 @@ export class handfull {
         this.dice = dice;
         this.name = name;
         this.diceString = diceString;
+        this.id = chance.guid();
     }
 
     roll(isCrit = false): historyObj {
@@ -66,7 +68,7 @@ type historyObj = {
 
 type diceState = {
     critMode: boolean,
-    customHandfulls: handfull[],
+    customHandfulls: Map<string, handfull>,
     deletionMode: boolean,
     history: historyObj[],
     importExportMode: boolean,
@@ -77,12 +79,15 @@ type diceState = {
     tempName: string,
 };
 
+const initialDice1 = new handfull('d20+4', 'shortbow(atk)');
+const initialDice2 = new handfull('d6+4', 'shortbow(dmg)')
+
 export const diceStore: diceState = observable({
     critMode: false,
-    customHandfulls: [
-        new handfull('d20+4', 'shortbow(atk)'),
-        new handfull('d6+4', 'shortbow(dmg)'),
-    ],
+    customHandfulls: new Map<string, handfull>([
+        [initialDice1.id, initialDice1],
+        [initialDice2.id, initialDice2]
+    ]),
     deletionMode: false,
     history: [],
     importExportMode: false,
@@ -119,11 +124,11 @@ export function updateHistory(result: historyObj) {
     }
 }
 
-export const handleCustomButtonClick = action((dice: handfull, index: number) => {
+export const handleCustomButtonClick = action((dice: handfull, removable: boolean) => {
     const { deletionMode, critMode } = diceStore;
 
-    if (deletionMode) {
-        deleteCustomHandfull(index);
+    if (deletionMode && removable) {
+        deleteCustomHandfull(dice);
     } else {
         const rollHistory = dice.roll(critMode);
         updateHistory(rollHistory);
@@ -132,15 +137,15 @@ export const handleCustomButtonClick = action((dice: handfull, index: number) =>
 
 export const saveHandfull = action(() => {
     const { tempDiceString, tempName, customHandfulls } = diceStore;
+
     if (tempDiceString) {
-        diceStore.customHandfulls = [...customHandfulls, new handfull(tempDiceString, tempName)]
+        const newHandfull = new handfull(tempDiceString, tempName);
+        customHandfulls.set(newHandfull.id, newHandfull);
     }
 });
 
-export function deleteCustomHandfull(index: number) {
-    const newCustomHandfulls = diceStore.customHandfulls;
-    newCustomHandfulls.splice(index, 1);
-    diceStore.customHandfulls = newCustomHandfulls;
+export function deleteCustomHandfull(handfull: handfull) {
+    diceStore.customHandfulls.delete(handfull.id)
 }
 
 export const setHandfullName = action((handfullName: string) => {
@@ -164,8 +169,10 @@ export const setTempDiceString = action((tempDiceString: string) => {
 });
 
 export const exportHandfulls = action(() => {
-    const exportArray: string[] = diceStore.customHandfulls.map(handfull => {
-        return `${handfull.name}|${handfull.diceString}`;
+    const exportArray: string[] = [];
+    
+    diceStore.customHandfulls.forEach(handfull => {
+        exportArray.push(`${handfull.name}|${handfull.diceString}`);
     });
     const exportString = exportArray.join(',');
 
@@ -184,12 +191,15 @@ export const importHandfulls = action(() => {
     const { importString } = diceStore;
 
     try {
-        const handfulls: handfull[] = importString.split(',').map(diceString => {
+        const newCustomHandfulls = new Map<string, handfull>();
+
+        importString.split(',').forEach(diceString => {
             const [name, value] = diceString.split('|');
-            return new handfull(value, name);
+            const newHandfull = new handfull(value, name);
+            newCustomHandfulls.set(newHandfull.id, newHandfull);
         });
 
-        diceStore.customHandfulls = handfulls;
+        diceStore.customHandfulls = newCustomHandfulls;
     } catch {
         // toast failure
     }
