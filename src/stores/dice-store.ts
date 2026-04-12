@@ -9,7 +9,6 @@ type die = {
     operation: 'add' | 'subtract';
 }
 
-// const MOD_REGEX = /([+-]\s?\d+)/g;
 const MOD_REGEX = /([+-]\s?\d+)([^d]|$)/g
 const LATTER_DICE_REGEX = /[+-]\s?\d+d\d+/g;
 
@@ -156,7 +155,7 @@ export const handleCustomButtonClick = action((dice: handfull, removable: boolea
     const { deletionMode, critMode } = diceStore;
 
     if (deletionMode && removable) {
-        deleteCustomHandfull(dice);
+        diceStore.customHandfulls.delete(dice.id);
     } else {
         const rollHistory = dice.roll(critMode);
         updateHistory(rollHistory);
@@ -172,9 +171,6 @@ export const saveHandfull = action(() => {
     }
 });
 
-export function deleteCustomHandfull(handfull: handfull) {
-    diceStore.customHandfulls.delete(handfull.id)
-}
 
 export const setHandfullName = action((handfullName: string) => {
     diceStore.tempName = handfullName;

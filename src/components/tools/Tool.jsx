@@ -4,10 +4,10 @@ import Caesar from './Caesar';
 import RandomNpc from './RandomNpc';
 import DiceRoller from './dice/DiceRoller';
 import DiceImporterExporter from './dice/DiceImporterExporter';
-import Monster from './Monster';
-import MonsterV2 from './MonsterV2';
+import Monster from './monster/Monster';
+import MonsterV2 from './monster/MonsterV2';
 
-import { toolStore } from '../stores/tool-store';
+import { toolStore } from '../../stores/tool-store';
 
 const TOOLS = {
     'caesar': <Caesar/>,

@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import { monsterStore } from '../stores/monster-store';
+import { monsterStore } from '../../../stores/monster-store';
 // import '../css/Statblock.css';
 
 // https://www.dnd5eapi.co/

@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react';
-import { monsterStore } from '../../stores/monster-store';
+import { monsterStore } from '../../../stores/monster-store';
 import DiceButton from '../dice/DiceButton';
-import { handfull } from '../../stores/dice-store';
-import { splitTextAroundMatches } from '../../helpers/monster-helper';
+import { handfull } from '../../../stores/dice-store';
+import { splitTextAroundMatches } from '../../../helpers/monster-helper';
 
 function statRectangle(statName: string, statValue: number) {
     const modifier = Math.ceil((statValue - 10) / 2);

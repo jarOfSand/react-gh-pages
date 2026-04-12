@@ -1,4 +1,4 @@
-import { diceStore, clearImportString, importHandfulls, setImportString } from '../../stores/dice-store';
+import { diceStore, clearImportString, importHandfulls, setImportString } from '../../../stores/dice-store';
 import { observer } from 'mobx-react';
 
 function DiceImporterExporter() {

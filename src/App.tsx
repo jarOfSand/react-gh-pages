@@ -1,6 +1,6 @@
 import './App.css';
-import Sidebar from './sidebar/Sidebar';
-import Tool from './tools/Tool';
+import Sidebar from './components/sidebar/Sidebar';
+import Tool from './components/tools/Tool';
 
 function App() {
   return (

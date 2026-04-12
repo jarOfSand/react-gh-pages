@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import { caesarStore, setCyphertext } from '../stores/caesar-store';
+import { caesarStore, setCyphertext } from '../../stores/caesar-store';
 
 const a_asciiCode = 'a'.charCodeAt(0);
 const A_asciiCode = 'A'.charCodeAt(0);
