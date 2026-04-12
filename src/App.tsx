@@ -1,12 +1,11 @@
-import { useState } from 'react';
 import './App.css';
 import Sidebar from './sidebar/Sidebar';
 import Tool from './tools/Tool';
-function App() {
 
+function App() {
   return (
-    <div style={{ display: 'flex'}}>
-      <Sidebar/>
+    <div style={{ display: 'flex' }}>
+      <Sidebar />
       <Tool />
     </div>
   );

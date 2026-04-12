@@ -1,5 +1,5 @@
 import { observable, action } from 'mobx';
-import { getMonsterList, getMonsterData } from '../helpers/data-helper';
+import { getMonsterList, getMonsterData } from '../services/monster-service';
 
 export type monsterListItem = {
     index: string,

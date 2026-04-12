@@ -14,12 +14,12 @@ function getMonsterSelector(monsterList: monsterListItem[], setActiveMonster: Fu
 
 function MonsterV2() {
     const { monsterList } = monsterStore;
-    
+
     return (
         <div>
             {getMonsterSelector(monsterList, setActiveMonster)}
-            <MonsterBlock/>
-            <RollResultsQueue/>
+            <MonsterBlock />
+            <RollResultsQueue />
         </div>);
 }
 
