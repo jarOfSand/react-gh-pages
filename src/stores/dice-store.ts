@@ -1,4 +1,6 @@
 import { observable, action } from 'mobx';
+import { toast } from 'react-toastify';
+
 var _ = require('lodash');
 const Chance = require('chance');
 const chance = new Chance();
@@ -201,6 +203,7 @@ export const exportHandfulls = action(() => {
     const exportString = exportArray.join(',');
 
     navigator.clipboard.writeText(exportString);
+    toast("copied to clipboard. import to restore your dice.");
 });
 
 export const setImportString = action((importString: string) => {

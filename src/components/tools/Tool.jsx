@@ -20,7 +20,7 @@ const TOOLS = {
 function Tool() {
     const {activeTool} = toolStore;
 
-    return <div style={{backgroundColor: '#ddd', width: '100%'}}>
+    return <div style={{backgroundColor: '#ddd', width: '100%', height: '100vh'}}>
         {TOOLS[activeTool]}
     </div>;
 }

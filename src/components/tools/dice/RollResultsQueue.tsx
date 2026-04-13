@@ -3,8 +3,6 @@ import { observer } from 'mobx-react';
 
 const RollResultsQueue = (props: { maxLength?: number }) => {
     const { history } = diceStore;
-
-    const INDENT = { marginLeft: '10px' };
     const maxIndex = props.maxLength ? props.maxLength - 1 : 10
 
     const queue = history.map(({ diceString, total, result }, index) => {
@@ -16,7 +14,7 @@ const RollResultsQueue = (props: { maxLength?: number }) => {
                 resultString,
             ].join(' ');
 
-            return (<div style={index > 0 ? INDENT : {}} key={index}>
+            return (<div key={index}>
                 <span style={{ marginLeft: 'auto', width: '40px', marginRight: '5px' }}>{total}</span>
                 <span style={{ color: '#aaa', marginRight: '5px', fontSize: 'smaller' }}>{subtext}</span>
             </div>)

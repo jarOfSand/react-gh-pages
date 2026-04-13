@@ -21,10 +21,10 @@ type action = {
 
 function getActions(actions: action[]) {
     const actionRows = actions.map(action => {
-        return <div style={{marginBottom: '15px'}}>
-            <span style={{fontWeight: 'bold', marginRight: '5px'}}>{action.name}</span>
-                {splitTextAroundMatches(action.desc)}
-            </div>
+        return <div style={{ marginTop: '15px' }}>
+            <span style={{ fontWeight: 'bold', marginRight: '5px' }}>{action.name}</span>
+            {splitTextAroundMatches(action.desc)}
+        </div>
     });
 
     return (<div>
@@ -39,15 +39,16 @@ function MonsterBlock(): React.JSX.Element | null {
         return null;
     }
 
-    return <div style={{ marginBottom: '10px' }}>
-        <p>{activeMonster.name}</p>
-        <p>{`${activeMonster.size} ${activeMonster.type}`}</p>
-        <p>{`${activeMonster.hit_points} hp `}<DiceButton dice={new handfull(activeMonster.hit_points_roll)} /></p>
-
-        <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '15px'}}>
+    return <div style={{ overflowY: 'auto', height: 'calc(100vh - 128px)' }}>
+        <div>{activeMonster.name}</div>
+        <div>{`${activeMonster.size} ${activeMonster.type}`}</div>
+        <div>{`${activeMonster.hit_points} hp `}<DiceButton dice={new handfull(activeMonster.hit_points_roll)} /></div>
+        <div style={{ display: 'flex', flexDirection: 'row', marginTop: '10px' }}>
             {statRectangle('STR', activeMonster.strength)}
             {statRectangle('DEX', activeMonster.dexterity)}
             {statRectangle('CON', activeMonster.constitution)}
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '10px' }}>
             {statRectangle('INT', activeMonster.intelligence)}
             {statRectangle('WIS', activeMonster.wisdom)}
             {statRectangle('CHA', activeMonster.charisma)}
