@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import { monsterStore } from '../../../stores/monster-store';
 import DiceButton from '../dice/DiceButton';
-import { handfull } from '../../../stores/dice-store';
+import { handfull } from '../../../classes/handfull-class';
 import { splitTextAroundMatches } from '../../../helpers/monster-helper';
 
 function statRectangle(statName: string, statValue: number) {

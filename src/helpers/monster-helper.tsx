@@ -1,4 +1,4 @@
-import { handfull } from '../stores/dice-store';
+import { handfull } from '../classes/handfull-class';
 import DiceButton from '../components/tools/dice/DiceButton';
 
 const MOD_REGEXP = /^[+-]\d+[^d]/;

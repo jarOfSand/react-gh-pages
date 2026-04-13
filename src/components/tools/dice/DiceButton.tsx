@@ -1,4 +1,5 @@
-import { diceStore, handfull, handleCustomButtonClick } from '../../../stores/dice-store';
+import { diceStore, handleCustomButtonClick } from '../../../stores/dice-store';
+import { handfull } from '../../../classes/handfull-class';
 import { observer } from 'mobx-react';
 
 const DiceButton = (props: { dice: handfull, removable?: boolean }) => {
