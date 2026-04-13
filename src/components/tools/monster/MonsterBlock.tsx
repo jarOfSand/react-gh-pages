@@ -39,7 +39,7 @@ function MonsterBlock(): React.JSX.Element | null {
         return null;
     }
 
-    return <div style={{ overflowY: 'auto', height: 'calc(100vh - 128px)' }}>
+    return <div style={{ overflowY: 'auto', flexGrow: 1 }}>
         <div>{activeMonster.name}</div>
         <div>{`${activeMonster.size} ${activeMonster.type}`}</div>
         <div>{`${activeMonster.hit_points} hp `}<DiceButton dice={new handfull(activeMonster.hit_points_roll)} /></div>

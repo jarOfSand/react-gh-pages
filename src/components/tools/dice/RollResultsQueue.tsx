@@ -28,7 +28,8 @@ const RollResultsQueue = (props: { maxLength?: number }) => {
         borderLeft: '2px solid black',
         borderRadius: '5px',
         marginTop: '10px',
-        paddingLeft: '5px'
+        paddingLeft: '5px',
+        flexShrink: 0
     }}>{queue.filter(Boolean)}</div>);
 }
 

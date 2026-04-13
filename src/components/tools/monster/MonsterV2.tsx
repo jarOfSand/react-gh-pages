@@ -7,7 +7,7 @@ import SharedButtons from '../dice/SharedButtons';
 
 function MonsterV2() {
     return (
-        <div>
+        <div style={{display: 'flex', flexDirection: 'column', height: '100vh'}}>
             <MonsterSelector/>
             <BookmarkedMonsters/>
             <SharedButtons/>

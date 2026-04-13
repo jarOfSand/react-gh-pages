@@ -2,7 +2,7 @@ import { handfull } from '../stores/dice-store';
 import DiceButton from '../components/tools/dice/DiceButton';
 
 const MOD_REGEXP = /^[+-]\d+[^d]/;
-const COMBO_REGEXP = /((\d+d\d+)(\s?[-+]\s?((\d+d\d+)|(\d+))*)*|[+-]\d+[^d])/g
+const COMBO_REGEXP = /((\d+d\d+)(\s?[-+]\s?((\d+d\d+)|(\d+))*)*|[+-]\d+[^d])/g;
 
 function getButtonMatches(text: string): string[] {
     return [...text.matchAll(COMBO_REGEXP)].map(match => match[0]);

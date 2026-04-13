@@ -13,7 +13,6 @@ type die = {
 
 const MOD_REGEX = /([+-]\s?\d+)([^d]|$)/g
 const LATTER_DICE_REGEX = /[+-]\s?\d+d\d+/g;
-
 const FIRST_DICE_REGEX = /^\d+d\d+/;
 
 function getModMatches(text: string): number[] {
