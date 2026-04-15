@@ -1,20 +1,20 @@
 import { historyObj } from '../stores/dice-store';
-import { toast } from 'react-toastify';
+import { toast, ToastOptions } from 'react-toastify';
 
 var _ = require('lodash');
 const Chance = require('chance');
 const chance = new Chance();
 
 const MOD_REGEX = /([+-]\s?\d+)([^d]|$)/g
-const LATTER_DICE_REGEX = /[+-]\s?\d+d\d+/g;
-const FIRST_DICE_REGEX = /^\d+d\d+/;
+const LATTER_DICE_REGEX = /[+-]\s?\d*d\d+/g;
+const FIRST_DICE_REGEX = /^\d*d\d+/;
 
 function getDie(dieString: string, operation: 'add' | 'subtract'): die {
     const [diceQuantString, diceSizeString] = dieString.split('d');
     return {
         operation,
         size: parseInt(diceSizeString),
-        quantity: parseInt(diceQuantString)
+        quantity: diceQuantString ? parseInt(diceQuantString) : 1
     }
 }
 
@@ -49,6 +49,13 @@ export type die = {
     operation: 'add' | 'subtract';
 }
 
+const CRIT_TOAST_PROPS: ToastOptions = {
+    autoClose: 1000,
+    position: 'bottom-center',
+    closeOnClick: true,
+    theme: 'colored'
+};
+
 export class handfull {
     name: string;
     diceString: string;
@@ -63,21 +70,19 @@ export class handfull {
         this.diceString = diceString;
         this.id = chance.guid();
     }
-
+    
     roll(isCrit = false): historyObj {
         const allDiceResults: number[] = [];
         this.dice.forEach(die => {
             const qty = die.quantity * (isCrit ? 2 : 1);
             for (let i = 0; i < qty; i++) {
                 const result = chance.natural({ min: 1, max: die.size });
-                if(die.size === 20){
+                if(qty === 1 && die.size === 20){
                     if(result === 20){
-                        // crit success
-                        toast('Nat 20! crit success!');
+                        toast.success('Nat 20!', CRIT_TOAST_PROPS);
                     }
                     if(result === 1){
-                        // crit fail
-                        toast('Nat 1! crit fail!');
+                        toast.error('Nat 1!', CRIT_TOAST_PROPS);
                     }
                 }
                 allDiceResults.push(result * (die.operation === 'add' ? 1 : -1))

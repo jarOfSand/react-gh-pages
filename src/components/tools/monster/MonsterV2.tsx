@@ -9,8 +9,8 @@ function MonsterV2() {
     return (
         <div style={{display: 'flex', flexDirection: 'column', height: '100vh'}}>
             <MonsterSelector/>
-            <BookmarkedMonsters/>
             <SharedButtons/>
+            <BookmarkedMonsters/>
             <RollResultsQueue maxLength={4}/>
             <MonsterBlock />
         </div>);

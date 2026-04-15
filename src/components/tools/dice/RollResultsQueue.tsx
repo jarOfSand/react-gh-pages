@@ -14,9 +14,16 @@ const RollResultsQueue = (props: { maxLength?: number }) => {
                 resultString,
             ].join(' ');
 
-            return (<div key={index}>
-                <span style={{ marginLeft: 'auto', width: '40px', marginRight: '5px' }}>{total}</span>
-                <span style={{ color: '#aaa', marginRight: '5px', fontSize: 'smaller' }}>{subtext}</span>
+            return (<div key={index} style={{
+                width: 'calc(100vw - 75px)',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                }}>
+                <span style={{ marginLeft: 'auto', marginRight: '5px' }}>{total}</span>
+                <span style={{
+                    color: '#aaa',
+                    fontSize: 'smaller',
+                    }}>{subtext}</span>
             </div>)
         }
 
