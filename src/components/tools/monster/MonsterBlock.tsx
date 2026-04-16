@@ -97,7 +97,7 @@ function getSkills() {
 
 
     return (<div style={{ marginTop: '5px' }}>
-        {handfulls}
+        <strong>{'Skills '}</strong>{handfulls}
     </div>);
 }
 
