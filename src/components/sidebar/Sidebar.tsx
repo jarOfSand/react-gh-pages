@@ -1,4 +1,6 @@
+import { handfull } from '../../classes/handfull-class';
 import { setActiveTool } from '../../stores/tool-store';
+import DiceButton from '../tools/dice/DiceButton';
 
 function SidebarButton(props: { targetTool: string }) {
     return <button onClick={() => setActiveTool(props.targetTool)}>{props.targetTool}</button>
@@ -7,13 +9,13 @@ function SidebarButton(props: { targetTool: string }) {
 function Sidebar() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', backgroundColor: '#ccc', height: '100vh', minWidth: '70px'}}>
+            <div style={{marginTop: '10px', fontSize: 'smaller'}}>{'tools'}</div>
             <SidebarButton targetTool={'dice'} />
-            <SidebarButton targetTool={'dice import'} />
             <div style={{ marginTop: '10px', fontSize: 'smaller' }}>{'dm tools'}</div>
             <SidebarButton targetTool={'npc'} />
             <SidebarButton targetTool={'caesar'} />
             <SidebarButton targetTool={'monster'} />
-            {/* <div style={{marginTop: '10px', fontSize: 'smaller'}}>{'pc tools'}</div> */}
+            {/* <SidebarButton targetTool={'dice import'} /> */}
         </div>
     );
 }
