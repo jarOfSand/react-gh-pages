@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 
 const RollResultsQueue = (props: { maxLength?: number }) => {
     const { history } = diceStore;
-    const maxIndex = props.maxLength ? props.maxLength - 1 : 10
+    const maxIndex = props.maxLength ? props.maxLength : 10
 
     const queue = history.map(({ diceString, total, result }, index) => {
 

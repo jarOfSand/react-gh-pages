@@ -27,14 +27,13 @@ function DiceRoller() {
             <div className={'dice-button-row'} style={{marginBottom: '10px'}}>
                 <button onClick={rollTempHandfull}>{'roll'}</button>
                 <button onClick={saveHandfull}>{'save'}</button>
-                <button onClick={exportHandfulls}>{'export to clipboard'}</button>
-
+                {/* <button onClick={exportHandfulls}>{'export to clipboard'}</button> */}
                 <SharedButtons/>
             </div>
+            <RollResultsQueue/>
             <div className={'dice-button-row'}>
                 {buttons}
             </div>
-            <RollResultsQueue/>
         </div>
     );
 }

@@ -1,6 +1,4 @@
-import { handfull } from '../../classes/handfull-class';
 import { setActiveTool } from '../../stores/tool-store';
-import DiceButton from '../tools/dice/DiceButton';
 
 function SidebarButton(props: { targetTool: string }) {
     return <button onClick={() => setActiveTool(props.targetTool)}>{props.targetTool}</button>
