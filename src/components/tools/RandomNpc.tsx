@@ -30,7 +30,6 @@ function RandomNpc() {
 
     return (
         <div style={{
-            margin: '5px',
             display: 'flex',
             flexDirection: 'column'
         }}>

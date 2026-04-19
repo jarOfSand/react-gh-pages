@@ -29,23 +29,23 @@ function decypher(cyphertext: string): React.JSX.Element[] {
       <div>{shiftCaesar(cyphertext, i)}</div>
     </div>);
   }
+
   return plaintexts;
 }
 
 function Caesar() {
-  const {cyphertext} = caesarStore;
+  const { cyphertext } = caesarStore;
 
   return (
     <div style={{
-      margin: '5px',
       display: 'flex',
-      flexDirection: 'row',
+      flexDirection: 'row'
     }}>
       <div style={{
         display: 'flex',
         flexDirection: 'column'
       }}>
-        <input placeholder={'cyphertext'} onChange={(e) => { setCyphertext(e.target.value)}} value={cyphertext}/>
+        <input placeholder={'cyphertext'} onChange={(e) => { setCyphertext(e.target.value) }} value={cyphertext} />
         {decypher(cyphertext)}
       </div>
     </div>

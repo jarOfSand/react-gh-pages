@@ -15,7 +15,7 @@ const RollResultsQueue = (props: { maxLength?: number }) => {
             ].join(' ');
 
             return (<div key={index} style={{
-                width: 'calc(100vw - 75px)',
+                width: 'calc(100vw - 80px)',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 }}>

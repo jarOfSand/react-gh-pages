@@ -5,7 +5,7 @@ import RandomNpc from './RandomNpc';
 import DiceRoller from './dice/DiceRoller';
 import DiceImporterExporter from './dice/DiceImporterExporter';
 import Monster from './monster/Monster';
-import MonsterV2 from './monster/MonsterV2';
+import Mirror from './Mirror';
 
 import { toolStore } from '../../stores/tool-store';
 
@@ -14,13 +14,14 @@ const TOOLS = {
     'npc': <RandomNpc/>,
     'dice': <DiceRoller/>,
     'dice import': <DiceImporterExporter/>,
-    'monster': <MonsterV2/>,
+    'mirror': <Mirror/>,
+    'monster': <Monster/>,
 }
 
 function Tool() {
     const {activeTool} = toolStore;
 
-    return <div style={{backgroundColor: '#ddd', width: '100%', height: '100vh'}}>
+    return <div style={{backgroundColor: '#ddd', width: '100%', height: '100vh', padding: '5px'}}>
         {TOOLS[activeTool]}
     </div>;
 }

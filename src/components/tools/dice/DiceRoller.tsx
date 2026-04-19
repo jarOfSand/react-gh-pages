@@ -16,7 +16,6 @@ function DiceRoller() {
 
     return (
         <div style={{
-            margin: '5px',
             display: 'flex',
             flexDirection: 'column'
         }}>
@@ -24,7 +23,7 @@ function DiceRoller() {
                 <input placeholder={'ex: fire sword or empty'} onChange={(e) => { setHandfullName(e.target.value) }} value={tempName} />
                 <input placeholder={'ex: 1d8+2d4+3'} onChange={(e) => { setTempDiceString(e.target.value) }} value={tempDiceString} />
             </div>
-            <div className={'dice-button-row'} style={{marginBottom: '10px'}}>
+            <div className={'dice-button-row'}>
                 <button onClick={rollTempHandfull}>{'roll'}</button>
                 <button onClick={saveHandfull}>{'save'}</button>
                 {/* <button onClick={exportHandfulls}>{'export to clipboard'}</button> */}
