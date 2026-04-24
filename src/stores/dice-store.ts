@@ -2,8 +2,6 @@ import { observable, action } from 'mobx';
 import { toast } from 'react-toastify';
 import { handfull } from '../classes/handfull-class';
 
-var _ = require('lodash');
-
 export type historyObj = {
     name: string,
     result: number[],

@@ -1,7 +1,6 @@
 import { historyObj } from '../stores/dice-store';
 import { toast, ToastOptions } from 'react-toastify';
 
-var _ = require('lodash');
 const Chance = require('chance');
 const chance = new Chance();
 
@@ -56,6 +55,12 @@ const CRIT_TOAST_PROPS: ToastOptions = {
     theme: 'colored'
 };
 
+function sum(results: number[]): number {
+    return results.reduce((sum, result) => {
+        return sum + result;
+    }, 0)
+}
+
 export class handfull {
     name: string;
     diceString: string;
@@ -94,7 +99,7 @@ export class handfull {
         return {
             name: this.name,
             diceString: this.diceString,
-            total: _.sum(result),
+            total: sum(result),
             result: result
         };
     }

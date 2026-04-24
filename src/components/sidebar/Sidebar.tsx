@@ -10,7 +10,7 @@ function Sidebar() {
             <div style={{marginTop: '10px', fontSize: 'smaller'}}>{'tools'}</div>
             <SidebarButton targetTool={'dice'} />
             <div style={{ marginTop: '10px', fontSize: 'smaller' }}>{'dm tools'}</div>
-            <SidebarButton targetTool={'caesar'} />
+            <SidebarButton targetTool={'cipher'} />
             <SidebarButton targetTool={'mirror'} />
             <SidebarButton targetTool={'monster'} />
             <SidebarButton targetTool={'npc'} />

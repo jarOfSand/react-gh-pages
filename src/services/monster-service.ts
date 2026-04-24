@@ -1,19 +1,29 @@
-import axios from 'axios';
-
 const baseurl = 'https://www.dnd5eapi.co/api/2014'
 
 async function getDataAxios(url: string) {
-    return await axios
-        .get(url)
-        .then((response) => {
-            return response.data;
-        });
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        
+        return result;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+        return {};
+    }
 }
 
 export async function getMonsterList() {
     const url = baseurl + '/monsters';
-
+    
     const data = await getDataAxios(url);
+
     return data.results;
 }
 

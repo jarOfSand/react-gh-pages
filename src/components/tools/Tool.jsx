@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 
-import Caesar from './Caesar';
+import Cipher from './Cipher';
 import RandomNpc from './RandomNpc';
 import DiceRoller from './dice/DiceRoller';
 import DiceImporterExporter from './dice/DiceImporterExporter';
@@ -10,7 +10,7 @@ import Mirror from './Mirror';
 import { toolStore } from '../../stores/tool-store';
 
 const TOOLS = {
-    'caesar': <Caesar/>,
+    'cipher': <Cipher/>,
     'npc': <RandomNpc/>,
     'dice': <DiceRoller/>,
     'dice import': <DiceImporterExporter/>,

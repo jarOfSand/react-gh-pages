@@ -1,10 +1,8 @@
 import { observer } from 'mobx-react';
 import { mirrorStore, setPlaintext } from '../../stores/mirror-store';
-var _ = require('lodash');
 
 function reverseText(text: string): string {
-  const splitText = text.split('');
-  return _.reverse(splitText).join('');
+  return text.split('').reverse().join('');
 }
 
 const BOX_STYLING = {
