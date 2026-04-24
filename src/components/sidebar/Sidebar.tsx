@@ -6,7 +6,7 @@ function SidebarButton(props: { targetTool: string }) {
 
 function Sidebar() {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', backgroundColor: '#ccc', height: '100vh', minWidth: '70px'}}>
+        <div style={{ display: 'flex', flexDirection: 'column', backgroundColor: '#ccc', height: '100vh', width: '70px'}}>
             <div style={{marginTop: '10px', fontSize: 'smaller'}}>{'tools'}</div>
             <SidebarButton targetTool={'dice'} />
             <div style={{ marginTop: '10px', fontSize: 'smaller' }}>{'dm tools'}</div>
