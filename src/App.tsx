@@ -1,6 +1,6 @@
 import './App.css';
-import Sidebar from './components/sidebar/Sidebar';
-import Tool from './components/tools/Tool';
+import Sidebar from './components/Sidebar';
+import Tool from './components/Tool';
 import { ToastContainer } from 'react-toastify';
 
 function App() {

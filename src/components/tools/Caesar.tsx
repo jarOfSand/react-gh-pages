@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import { cipherStore, setCiphertext } from '../../stores/cipher-store';
+import { cipherStore } from '../../stores/cipher-store';
 
 const a_ASCII_CODE = 'a'.charCodeAt(0);
 const A_ASCII_CODE = 'A'.charCodeAt(0);

@@ -1,4 +1,4 @@
-import { setActiveTool } from '../../stores/tool-store';
+import { setActiveTool } from '../stores/tool-store';
 
 function SidebarButton(props: { targetTool: string }) {
     return <button onClick={() => setActiveTool(props.targetTool)}>{props.targetTool}</button>

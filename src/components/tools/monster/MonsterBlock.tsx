@@ -135,7 +135,6 @@ function ArmorClass() {
         }
     })
 
-
     return <div><strong>{'AC'}</strong>{` ${acStrings.join(', ')}`}</div>
 }
 
