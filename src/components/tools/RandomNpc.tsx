@@ -2,6 +2,8 @@ import { PROFESSIONS, SPECIES, MAGIC_TYPES, WEAPONS } from '../../constants/npcV
 import { npcStore, setProfession, setSpecies, setSubspecies, setMagicType, setWeapon } from '../../stores/npc-store';
 import { observer } from 'mobx-react';
 import '../../css/RandomNpc.css';
+import Column from '../common/Column';
+import Row from '../common/Row';
 
 const Chance = require('chance');
 const chance = new Chance();
@@ -29,10 +31,7 @@ function RandomNpc() {
     }
 
     return (
-        <div style={{
-            display: 'flex',
-            flexDirection: 'column'
-        }}>
+        <Column>
             <div className={'npc-button-row'} style={{ display: 'flex', marginRight: 'auto' }}>
                 <button onClick={() => generateNpcHandler()}>{'generate'}</button>
 
@@ -45,15 +44,16 @@ function RandomNpc() {
                 }}>{'remove magic'}</button>}
             </div>
 
-            {species && <div style={{ marginTop: '10px' }}>{speciesString}</div>}
-            {profession && <div>{profession.name}</div>}
+            {species ? (<>
+                    <div style={{ marginTop: '10px' }}>{speciesString}</div>
+                    <div>{profession?.name}</div>
+                    <div style={{ marginTop: '10px' }}>{weapon}</div>
+                    <div>{profession?.item}</div>
+                    <div>{`${magicType} magic`}</div>
+                    <a style={{ marginRight: 'auto', marginTop: '10px' }} target={'_blank'} href={`https://dnd5e.wikidot.com/lineage:${species}`}>{'lineage:wiki'}</a>
+                </>) : null}
 
-            {weapon && <div style={{ marginTop: '10px' }}>{weapon}</div>}
-            {profession && <div>{profession.item}</div>}
-            {magicType && <div>{`${magicType} magic`}</div>}
-
-            {species && <a style={{ marginRight: 'auto', marginTop: '10px' }} target={'_blank'} href={`https://dnd5e.wikidot.com/lineage:${species}`}>{'lineage:wiki'}</a>}
-        </div>
+        </Column>
     );
 }
 

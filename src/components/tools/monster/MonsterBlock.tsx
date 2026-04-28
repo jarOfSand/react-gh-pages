@@ -73,11 +73,11 @@ function Actions() {
     });
 
     return (<>
-            <div style={{ fontSize: '24px', marginTop: '10px' }}>{'Actions'}</div>
-            <div>
-                {actionRows}
-            </div>
-        </>);
+        <div style={{ fontSize: '24px', marginTop: '10px' }}>{'Actions'}</div>
+        <div>
+            {actionRows}
+        </div>
+    </>);
 }
 
 function Skills(): React.JSX.Element | null {
@@ -103,7 +103,7 @@ function Skills(): React.JSX.Element | null {
 function Abilities() {
     const { activeMonster } = monsterStore;
 
-    if(!activeMonster.special_abilities.length){
+    if (!activeMonster.special_abilities.length) {
         return null;
     }
 
@@ -126,9 +126,9 @@ function ArmorClass() {
     const acStrings: string[] = [];
 
     activeMonster.armor_class.forEach(element => {
-        if(element.type === 'condition') {
+        if (element.type === 'condition') {
             acStrings.push(`${element.value} while ${element.condition.name.toLocaleLowerCase()}`);
-        } else if(element.type === 'armor') {
+        } else if (element.type === 'armor') {
             acStrings.push(`${element.value} with ${element.armor.map(armorPiece => armorPiece.name.toLocaleLowerCase()).join(', ')}`);
         } else {
             acStrings.unshift(element.value);
@@ -146,7 +146,7 @@ function Senses() {
     const keys = Object.keys(activeMonster.senses);
     keys.forEach(key => {
         const value = activeMonster.senses[key];
-        if(key === 'passive_perception') {
+        if (key === 'passive_perception') {
             senseStrings.unshift(`passive perception ${value}`);
         } else {
 
@@ -193,7 +193,7 @@ function MonsterBlock(): React.JSX.Element | null {
         <div><strong>{'HP'}</strong>{` ${activeMonster.hit_points} `}<DiceButton dice={new handfull(activeMonster.hit_points_roll)} /></div>
         <Speed />
 
-        <div style={{ display: 'flex', flexDirection: 'column', marginTop: '5px' }}>
+        <div style={{marginTop: '5px'}}>
             {statRectangle('Str', activeMonster.strength)}
             {statRectangle('Dex', activeMonster.dexterity)}
             {statRectangle('Con', activeMonster.constitution)}

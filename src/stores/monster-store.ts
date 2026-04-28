@@ -15,7 +15,7 @@ type monsterState = {
     bookmarks: Map<string, monsterListItem>
 }
 
-const ABOLETH = {
+export const ABOLETH = {
     index: 'aboleth',
     name: 'Aboleth',
     url: '/api/2014/monsters/aboleth'

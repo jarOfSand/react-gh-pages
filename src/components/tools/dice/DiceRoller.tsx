@@ -5,15 +5,8 @@ import { handfull } from '../../../classes/handfull-class';
 import DiceButton from './DiceButton'
 import RollResultsQueue from './RollResultsQueue';
 import SharedButtons from './SharedButtons';
-import { CSSProperties } from 'react';
-
-function Row(props: { children: React.JSX.Element[], style?: CSSProperties }): React.JSX.Element {
-    return <div style={{ display: 'flex', flexDirection: 'row', ...props.style }}>{props.children}</div>
-}
-
-function Column(props: { children: React.JSX.Element[], style?: CSSProperties }): React.JSX.Element {
-    return <div style={{ display: 'flex', flexDirection: 'column', ...props.style }}>{props.children}</div>
-}
+import Column from '../../common/Column';
+import Row from '../../common/Row';
 
 function DiceRoller() {
     const { customHandfulls, tempDiceString, tempName } = diceStore;

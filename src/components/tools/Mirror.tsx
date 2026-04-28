@@ -1,5 +1,7 @@
 import { observer } from 'mobx-react';
 import { mirrorStore, setPlaintext } from '../../stores/mirror-store';
+import Column from '../common/Column';
+import Row from '../common/Row';
 
 function reverseText(text: string): string {
   return text.split('').reverse().join('');
@@ -12,29 +14,29 @@ const BOX_STYLING = {
 function Reflections() {
   const { plaintext } = mirrorStore;
 
-  return (<div style={{ display: 'flex', flexDirection: 'column', margin: '20px 0' }}>
+  return (<Column style={{ margin: '20px 0' }}>
     <div>{'reflection'}</div>
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
+    <Row>
       <div style={BOX_STYLING}>{plaintext}</div>
       <div style={{ ...BOX_STYLING, transform: 'scale(-1,1)', backgroundColor: 'rgba(127, 152, 221, 0.50)' }}>{plaintext}</div>
-    </div>
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
+    </Row>
+    <Row>
       <div style={{ ...BOX_STYLING, transform: 'scale(1,-1)', backgroundColor: 'rgba(127, 152, 221, 0.50)' }}>{plaintext}</div>
       <div style={{ ...BOX_STYLING, transform: 'scale(-1,-1)', backgroundColor: 'rgba(127, 152, 221, 1)' }}>{plaintext}</div>
-    </div>
-  </div>);
+    </Row>
+  </Column>);
 }
 
 function Reverse() {
   const { plaintext } = mirrorStore;
 
-  return (<div style={{ display: 'flex', flexDirection: 'column' }}>
+  return (<Column>
     <div>{'reverse'}</div>
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
+    <Row>
       <div style={BOX_STYLING}>{plaintext}</div>
       <div style={BOX_STYLING}>{reverseText(plaintext)}</div>
-    </div>
-  </div>);
+    </Row>
+  </Column>);
 }
 
 function Mirror() {

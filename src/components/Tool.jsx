@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import Cipher from './tools/Cipher';
+import Cipher from './tools/cipher/Cipher';
 import RandomNpc from './tools/RandomNpc';
 import DiceRoller from './tools/dice/DiceRoller';
 import DiceImporterExporter from './tools/dice/DiceImporterExporter';
