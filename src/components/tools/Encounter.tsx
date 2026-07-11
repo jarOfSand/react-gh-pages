@@ -90,10 +90,11 @@ const XP_THRESHOLDS_BY_PC_LEVEL: xpThreshold[] = [
 type difficulty = 'easy' | 'medium' | 'hard' | 'deadly';
 
 function XpRow(props: { row: xpThreshold, multiplier: number, difficulty: difficulty }) {
+    const { pcCount } = encounterStore;
     const { row, multiplier, difficulty } = props;
 
     const xpThreshold = row[difficulty];
-    const modifiedXp = (xpThreshold / multiplier).toFixed(0);
+    const modifiedXp = (pcCount * xpThreshold / multiplier).toFixed(0);
 
     return (<div>{`${modifiedXp} xp `}<span style={{ fontSize: 'smaller', color: '#aaa' }}>{`${difficulty}`}</span></div>);
 }
