@@ -15,6 +15,7 @@ function Sidebar() {
             <SidebarButton targetTool={'mirror'} />
             <SidebarButton targetTool={'monster'} />
             <SidebarButton targetTool={'npc'} />
+            <SidebarButton targetTool={'encounter'} />
             {/* <SidebarButton targetTool={'dice import'} /> */}
         </Column>
     );

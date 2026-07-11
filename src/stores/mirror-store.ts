@@ -1,11 +1,11 @@
 import {observable, action} from 'mobx';
 
 
-type toolState = {
+type mirrorState = {
     plaintext: string
 }
 
-export const mirrorStore: toolState = observable({
+export const mirrorStore: mirrorState = observable({
     plaintext: ''
 });
 
