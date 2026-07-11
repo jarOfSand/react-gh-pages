@@ -1,4 +1,4 @@
-import { diceStore, exportHandfulls, saveHandfull, rollTempHandfull, setTempDiceString, setHandfullName } from '../../../stores/dice-store';
+import { diceStore, saveHandfull, rollTempHandfull, setTempDiceString, setHandfullName } from '../../../stores/dice-store';
 import { observer } from 'mobx-react';
 import '../../../css/DiceRoller.css';
 import { handfull } from '../../../classes/handfull-class';

@@ -21,7 +21,6 @@ function DiceImporterExporter() {
                     <button onClick={clearImportString}>{'clear'}</button>
                 </div>
             </div>
-
         </div>
     );
 }
