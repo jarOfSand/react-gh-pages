@@ -1,6 +1,5 @@
 import {observable, action} from 'mobx';
 
-
 type encounterState = {
     pcCount: number,
     pcLevel: number,
@@ -8,7 +7,7 @@ type encounterState = {
 }
 
 export const encounterStore: encounterState = observable({
-    pcCount: 1,
+    pcCount: 3,
     pcLevel: 1,
     enemyCount: 1
 });
