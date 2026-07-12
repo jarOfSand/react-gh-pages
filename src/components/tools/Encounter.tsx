@@ -106,7 +106,7 @@ function Encounter() {
     const row = XP_THRESHOLDS_BY_PC_LEVEL.find(row => row.level === pcLevel) as xpThreshold;
 
     return (
-        <Row style={{ marginTop: '20px', marginLeft: '20px' }}>
+        <Row>
             <Column style={{ marginRight: '20px', gap: '5px' }}>
                 <div>{'pc count'}</div>
                 <div>{'pc level'}</div>

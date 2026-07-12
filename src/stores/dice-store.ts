@@ -2,7 +2,7 @@ import { observable, action } from 'mobx';
 import { toast } from 'react-toastify';
 import { handfull } from '../classes/handfull-class';
 
-export type historyObj = {
+export type rollSummary = {
     name: string,
     result: number[],
     total: number,
@@ -13,7 +13,7 @@ type diceState = {
     critMode: boolean,
     customHandfulls: Map<string, handfull>,
     deletionMode: boolean,
-    history: historyObj[],
+    history: rollSummary[],
     importExportMode: boolean,
     importString: string,
     latestRollDesc: string,
@@ -60,7 +60,7 @@ export const rollTempHandfull = action(() => {
     }
 });
 
-function updateHistory(result: historyObj) {
+function updateHistory(result: rollSummary) {
     const { history } = diceStore;
 
     history.unshift(result);

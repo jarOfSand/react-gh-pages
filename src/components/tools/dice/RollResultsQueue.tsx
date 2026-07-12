@@ -6,7 +6,6 @@ const RollResultsQueue = (props: { maxLength?: number }) => {
     const maxIndex = props.maxLength ? props.maxLength : 10;
 
     const queue = history.map(({ diceString, total, result }, index) => {
-
         if (index < maxIndex) {
             const resultString = result.length > 1 ? `[${result}]` : '';
             const subtext = [
@@ -18,6 +17,7 @@ const RollResultsQueue = (props: { maxLength?: number }) => {
                 width: '100%',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
+                opacity: 1 / (index + 1)
                 }}>
                 <span style={{ marginLeft: 'auto', marginRight: '5px' }}>{total}</span>
                 <span style={{

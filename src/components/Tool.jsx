@@ -25,7 +25,9 @@ function Tool() {
         // height: 'calc(100vh - 10px)',
         // padding: '5px'
     }}>
-        {TOOLS[activeTool]}
+        <div style={{padding: '20px 10px'}}>
+            {TOOLS[activeTool]}
+        </div>
     </div>;
 }
 

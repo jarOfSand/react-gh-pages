@@ -29,7 +29,7 @@ function DiceRoller() {
                 </Row>
             </Column>
             <SharedButtons />
-            <RollResultsQueue />
+            <RollResultsQueue maxLength={4}/>
             <div className={'dice-button-row'}>
                 {buttons}
             </div>

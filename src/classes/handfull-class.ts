@@ -1,4 +1,4 @@
-import { historyObj } from '../stores/dice-store';
+import { rollSummary } from '../stores/dice-store';
 import { toast, ToastOptions } from 'react-toastify';
 
 const Chance = require('chance');
@@ -76,7 +76,7 @@ export class handfull {
         this.id = chance.guid();
     }
     
-    roll(isCrit = false): historyObj {
+    roll(isCrit = false): rollSummary {
         const allDiceResults: number[] = [];
         this.dice.forEach(die => {
             const qty = die.quantity * (isCrit ? 2 : 1);
