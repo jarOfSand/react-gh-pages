@@ -7,7 +7,8 @@ import MonsterBlock from './MonsterBlock';
 
 function Monster() {
     return (
-        <div style={{display: 'flex', flexDirection: 'column', height: '100vh'}}>
+        <div style={{display: 'flex', flexDirection: 'column', height: '100vh', paddingLeft: '10px'}}>
+            <div style={{height: '20px'}}>{''}</div>
             <MonsterSelector/>
             <SharedButtons/>
             <RollResultsQueue maxLength={4}/>

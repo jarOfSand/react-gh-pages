@@ -14,20 +14,24 @@ const TOOLS = {
     'dice': <DiceRoller/>,
     'dice import': <DiceImporterExporter/>,
     'mirror': <Mirror/>,
-    'monster': <Monster/>,
+    // 'monster': <Monster/>,
     'encounter': <Encounter/>,
+}
+
+function getTool(activeTool) {
+    if(activeTool === 'monster') {
+        return <Monster/>;
+    }
+    return <div style={{padding: '20px 10px 10px'}}>
+        {TOOLS[activeTool]}
+    </div>
 }
 
 function Tool() {
     const {activeTool} = toolStore;
 
-    return <div style={{backgroundColor: '#ddd', width: 'calc(100vw - 70px)',
-        // height: 'calc(100vh - 10px)',
-        // padding: '5px'
-    }}>
-        <div style={{padding: '20px 10px'}}>
-            {TOOLS[activeTool]}
-        </div>
+    return <div style={{backgroundColor: '#ddd', width: 'calc(100vw - 70px)'}}>
+        {getTool(activeTool)}
     </div>;
 }
 

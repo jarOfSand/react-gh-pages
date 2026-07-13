@@ -30,30 +30,40 @@ function RandomNpc() {
         setWeapon(chance.pickone(WEAPONS));
     }
 
-    return (
-        <Column>
-            <div className={'npc-button-row'} style={{ display: 'flex', marginRight: 'auto' }}>
+    return (<Column>
+        <Row>
+            <div className={'npc-button-row'}>
                 <button onClick={() => generateNpcHandler()}>{'generate'}</button>
 
-                {species && <button style={{ marginRight: 'auto' }} onClick={() => {
+                {species && <button onClick={() => {
                     setMagicType(chance.pickone(MAGIC_TYPES));
                 }}>{!magicType ? 'add magic' : 'randomize magic'}</button>}
 
-                {magicType && <button style={{ marginRight: 'auto' }} onClick={() => {
+                {magicType && <button onClick={() => {
                     setMagicType('');
                 }}>{'remove magic'}</button>}
             </div>
-
-            {species ? (<>
-                    <div style={{ marginTop: '10px' }}>{speciesString}</div>
-                    <div>{profession?.name}</div>
-                    <div style={{ marginTop: '10px' }}>{weapon}</div>
-                    <div>{profession?.item}</div>
-                    <div>{`${magicType} magic`}</div>
-                    <a style={{ marginRight: 'auto', marginTop: '10px' }} target={'_blank'} href={`https://dnd5e.wikidot.com/lineage:${species}`}>{'lineage:wiki'}</a>
-                </>) : null}
-
-        </Column>
+        </Row>
+        <Row>
+            <Column style={{paddingRight: '10px'}}>
+                <div>{'species:'}</div>
+                <div>{'profession:'}</div>
+                <div>{'items:'}</div>
+                <div>{'weapon:'}</div>
+                <div>{'magic:'}</div>
+                <div>{'link:'}</div>
+            </Column>
+            {species ?
+                <Column>
+                    <div>{speciesString}</div>
+                    <div>{profession?.name || '---'}</div>
+                    <div>{profession?.item || '---'}</div>
+                    <div>{weapon}</div>
+                    <div>{magicType ? `${magicType} magic` : '---'}</div>
+                    <a target={'_blank'} href={`https://dnd5e.wikidot.com/lineage:${species}`}>{'lineage:wiki'}</a>
+                </Column> : <div></div>}
+        </Row>
+    </Column>
     );
 }
 

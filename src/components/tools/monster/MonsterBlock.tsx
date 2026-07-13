@@ -186,7 +186,7 @@ function MonsterBlock(): React.JSX.Element | null {
         return null;
     }
 
-    return <div style={{ overflowY: 'auto', flexGrow: 1 }}>
+    return <div style={{ overflowY: 'auto', flexGrow: 1, paddingRight: '10px' }}>
         <div style={{ fontSize: 'larger', fontWeight: 'bold' }}>{activeMonster.name}</div>
         <div style={{ fontSize: 'smaller', marginBottom: '10px' }}>{`${activeMonster.size} ${activeMonster.type}`}</div>
         <ArmorClass />
@@ -205,7 +205,7 @@ function MonsterBlock(): React.JSX.Element | null {
         <Skills />
         <Senses />
         <div><strong>{'Languages'}</strong>{` ${activeMonster.languages ? activeMonster.languages : 'none'}`}</div>
-        <div><strong>{'CR'}</strong>{` ${activeMonster.challenge_rating}`}</div>
+        <div><strong>{'CR'}</strong>{` ${activeMonster.challenge_rating} (${activeMonster.xp} xp)`}</div>
         <Abilities />
 
         <Actions />
