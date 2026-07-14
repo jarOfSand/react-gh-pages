@@ -6,6 +6,7 @@ type npcState = {
     subspecies: string,
     magicType: string,
     weapon: string,
+    variant: string,
 }
 
 type profession = {
@@ -19,6 +20,7 @@ export const npcStore: npcState = observable({
     subspecies: '',
     magicType: '',
     weapon: '',
+    variant: ''
 });
 
 export const setProfession = action((profession: profession) => {
@@ -39,4 +41,8 @@ export const setMagicType = action((magicType: string) => {
 
 export const setWeapon = action((weapon: string) => {
     npcStore.weapon = weapon;
+});
+
+export const setVariant = action((variant: string) => {
+    npcStore.variant = variant;
 });

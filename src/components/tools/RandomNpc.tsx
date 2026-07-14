@@ -1,5 +1,5 @@
-import { PROFESSIONS, SPECIES, MAGIC_TYPES, WEAPONS } from '../../constants/npcValues';
-import { npcStore, setProfession, setSpecies, setSubspecies, setMagicType, setWeapon } from '../../stores/npc-store';
+import { PROFESSIONS, SPECIES, MAGIC_TYPES, WEAPONS, VARIANTS } from '../../constants/npcValues';
+import { npcStore, setProfession, setSpecies, setSubspecies, setMagicType, setWeapon, setVariant } from '../../stores/npc-store';
 import { observer } from 'mobx-react';
 import '../../css/RandomNpc.css';
 import Column from '../common/Column';
@@ -8,13 +8,23 @@ import Row from '../common/Row';
 const Chance = require('chance');
 const chance = new Chance();
 
-function RandomNpc() {
+function DetailRow(props: {title: string, value: string | undefined | null}) : React.JSX.Element {
+    const {title, value} = props;
+
+    return (<Row>
+        <div style={{ width: '100px', flexShrink: '0' }}>{`${title}:`}</div>
+        <div style={{textWrap: 'wrap'}}>{value ? value : '---'}</div>
+    </Row>);
+}
+
+function RandomNpc() : React.JSX.Element {
     const {
         profession,
         species,
         subspecies,
         magicType,
-        weapon
+        weapon,
+        variant
     } = npcStore;
 
     const subspeciesString = subspecies ? `(${subspecies})` : '';
@@ -28,6 +38,15 @@ function RandomNpc() {
         setSubspecies(currentSubspecies);
         setProfession(chance.pickone(PROFESSIONS));
         setWeapon(chance.pickone(WEAPONS));
+
+        if(chance.d8() === 1) {
+            const variant = chance.pickone(VARIANTS);
+            const subvariant = chance.pickone(variant.subvariants);
+
+            setVariant(`${variant.name}(${subvariant})`);
+        } else {
+            setVariant('');
+        }
     }
 
     return (<Column>
@@ -44,25 +63,13 @@ function RandomNpc() {
                 }}>{'remove magic'}</button>}
             </div>
         </Row>
-        <Row>
-            <Column style={{paddingRight: '10px'}}>
-                <div>{'species:'}</div>
-                <div>{'profession:'}</div>
-                <div>{'items:'}</div>
-                <div>{'weapon:'}</div>
-                <div>{'magic:'}</div>
-                <div>{'link:'}</div>
-            </Column>
-            {species ?
-                <Column>
-                    <div>{speciesString}</div>
-                    <div>{profession?.name || '---'}</div>
-                    <div>{profession?.item || '---'}</div>
-                    <div>{weapon}</div>
-                    <div>{magicType ? `${magicType} magic` : '---'}</div>
-                    <a target={'_blank'} href={`https://dnd5e.wikidot.com/lineage:${species}`}>{'lineage:wiki'}</a>
-                </Column> : <div></div>}
-        </Row>
+        <DetailRow title={'species'} value={speciesString}/>
+        <DetailRow title={'variant'} value={variant}/>
+        <DetailRow title={'profession'} value={profession?.name}/>
+        <DetailRow title={'items'} value={profession?.item}/>
+        <DetailRow title={'weapon'} value={weapon}/>
+        <DetailRow title={'magic'} value={magicType}/>
+        {species ? <a target={'_blank'} href={`https://dnd5e.wikidot.com/lineage:${species}`}>{'lineage:wiki'}</a> : <></>}
     </Column>
     );
 }
