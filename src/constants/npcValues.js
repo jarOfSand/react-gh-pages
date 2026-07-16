@@ -35,9 +35,37 @@ export const SPECIES = [
 ];
 
 export const VARIANTS = [
-    { name: 'genasi', subvariants: ['water', 'air', 'fire', 'earth', 'wood', 'metal'] },
-    { name: 'aasimar', subvariants: ['protector', 'scourge', 'fallen'] },
-    { name: 'tiefling', subvariants: ['baalzebub', 'dispater', 'fierna', 'glasya', 'levistus', 'mammon', 'mephistocles', 'zariel'] },
+    { 
+        name: 'genasi',
+        subvariants: [
+            {name: 'water', link: 'https://dnd5e.wikidot.com/lineage:genasi-water'},
+            {name: 'air', link: 'https://dnd5e.wikidot.com/lineage:genasi-air'},
+            {name: 'fire', link: 'https://dnd5e.wikidot.com/lineage:genasi-fire'},
+            {name: 'earth', link: 'https://dnd5e.wikidot.com/lineage:genasi-earth'}
+        ]
+    },
+    {
+        name: 'aasimar',
+        subvariants:
+        [
+            {name: 'protector', link: 'https://dnd5e.wikidot.com/lineage:aasimar'},
+            {name: 'scourge', link: 'https://dnd5e.wikidot.com/lineage:aasimar'},
+            {name: 'fallen', link: 'https://dnd5e.wikidot.com/lineage:aasimar'}
+        ]
+    },
+    {
+        name: 'tiefling',
+        subvariants: [
+            {name: 'baalzebub', link: 'https://dnd5e.wikidot.com/lineage:tiefling'},
+            {name: 'dispater', link: 'https://dnd5e.wikidot.com/lineage:tiefling'},
+            {name: 'fierna', link: 'https://dnd5e.wikidot.com/lineage:tiefling'},
+            {name: 'glasya', link: 'https://dnd5e.wikidot.com/lineage:tiefling'},
+            {name: 'levistus', link: 'https://dnd5e.wikidot.com/lineage:tiefling'},
+            {name: 'mammon', link: 'https://dnd5e.wikidot.com/lineage:tiefling'},
+            {name: 'mephistocles', link: 'https://dnd5e.wikidot.com/lineage:tiefling'},
+            {name: 'zariel', link: 'https://dnd5e.wikidot.com/lineage:tiefling'},
+        ]
+    },
 ];
 
 export const WEAPONS = [
@@ -75,6 +103,7 @@ export const WEAPONS = [
     'unarmed, wrestling',
     'unarmed, karate',
     'unarmed, judo',
+    'unarmed, bodybuilder',
     'warhammer',
     'whip',
     'boomerang',
@@ -106,8 +135,8 @@ export const WEAPONS = [
 ]
 
 export const MAGIC_TYPES = [
-    'abjuration',
-    'animating',
+    'shield',
+    'puppeteering',
     'bear',
     'beast',
     'bird',
@@ -115,6 +144,8 @@ export const MAGIC_TYPES = [
     'bone',
     'bubble',
     'charm',
+    'lucky charm',
+    'writing',
     'clay',
     'cloud',
     'conifer',
@@ -160,35 +191,38 @@ export const MAGIC_TYPES = [
     'silver',
     'smoke',
     'snow',
-    'sound',
-    'star',
+    'spirit',
+    'silence',
+    'music',
+    'constellation',
     'steam',
     'stone',
     'time',
     'weather',
     'wind',
+    'contract',
 ]
 
 export const PROFESSIONS = [
     {name: 'acolyte', item: 'religious text, symbol of faith'},
     {name: 'alchemist', item: 'empty bottles, waterproof gloves'},
-    {name: 'apothecary', item: 'mortar, pestle, herbs, textbook'},
+    {name: 'apothecary', item: 'herbs, textbook'},
     {name: 'archaeologist', item: 'notebook, pencil'},
     {name: 'architect', item: 'compass(drawing), pencil'},
     {name: 'armorer', item: 'light hammer, oil, rag'},
     {name: 'author', item: 'notebook, pen'},
     {name: 'baker', item: 'apron, rolling pin'},
-    {name: 'banker', item: 'abacus, identification, reading glasses'},
-    {name: 'barber', item: 'straight razor, scissors, shaving cream, towel'},
+    {name: 'banker', item: 'abacus, reading glasses'},
+    {name: 'barber', item: 'straight razor, shaving cream'},
     {name: 'bartender', item: ''},
     {name: 'biologist', item: ''},
-    {name: 'blacksmith', item: 'long leather gloves, apron, hammer, tongs'},
+    {name: 'blacksmith', item: 'leather gloves, apron'},
     {name: 'bookseller', item: ''},
     {name: 'bottlemaker', item: ''},
     {name: 'bounty hunter', item: ''},
     {name: 'brewer', item: ''},
     {name: 'bronzesmith', item: ''},
-    {name: 'butcher', item: 'cleaver, skinning knife, apron'},
+    {name: 'butcher', item: 'skinning knife, apron'},
     {name: 'carpenter', item: ''},
     {name: 'carter/coachman', item: ''},
     {name: 'chandler', item: ''},
@@ -201,7 +235,7 @@ export const PROFESSIONS = [
     {name: 'farmer', item: ''},
     {name: 'ferry operator', item: 'pocket watch'},
     {name: 'falconer', item: ''},
-    {name: 'beekeeper', item: 'beekeeper suit, woven helmet'},
+    {name: 'beekeeper', item: 'beekeeper suit'},
     {name: 'maid', item: ''},
     {name: 'butler', item: ''},
     {name: 'fisher', item: ''},
@@ -210,8 +244,8 @@ export const PROFESSIONS = [
     {name: 'gardener', item: 'shears'},
     {name: 'glassworker', item: 'tinderbox'},
     {name: 'goldsmith', item: ''},
-    {name: 'guard', item: 'identification, spear'},
-    {name: 'guide', item: 'compass, handmade map'},
+    {name: 'guard', item: ''},
+    {name: 'guide', item: 'compass(magnetic), handdrawn map'},
     {name: 'hayward', item: ''},
     {name: 'herbalist', item: ''},
     {name: 'horsemonger', item: ''},
@@ -231,9 +265,9 @@ export const PROFESSIONS = [
     {name: 'lockier', item: ''},
     {name: 'lumberjack', item: 'axe'},
     {name: 'horsekeeper', item: 'treats, riding crop'},
-    {name: 'mayor', item: ''},
+    {name: 'mayor', item: 'signet ring, sealing wax'},
     {name: 'merchant', item: 'abacus'},
-    {name: 'messenger', item: ''},
+    {name: 'messenger', item: 'sachel'},
     {name: 'miller', item: ''},
     {name: 'monk', item: ''},
     {name: 'musician', item: 'instrument, sheet music'},
@@ -255,15 +289,15 @@ export const PROFESSIONS = [
     {name: 'shopkeeper', item: ''},
     {name: 'silversmith', item: 'jewelers loop, pliers'},
     {name: 'smuggler', item: ''},
-    {name: 'stonemason', item: 'hammer and chisel'},
+    {name: 'stonemason', item: 'light hammer, chisel'},
     {name: 'tanner', item: ''},
     {name: 'tax collector', item: ''},
-    {name: 'teacher', item: ''},
+    {name: 'teacher', item: 'chalk, treats'},
     {name: 'tinsmith', item: 'tin snips'},
     {name: 'translator', item: ''},
     {name: 'trapper', item: 'bear trap'},
     {name: 'urchin', item: ''},
-    {name: 'waste collector', item: ''},
+    {name: 'waste collector', item: 'bandana'},
     {name: 'weaver', item: 'woven backpack, reeds, shears'},
     {name: 'wheelwright', item: 'cord, clamp'},
     {name: 'woodsman', item: 'felling axe'},
