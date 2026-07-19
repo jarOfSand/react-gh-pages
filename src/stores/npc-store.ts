@@ -1,4 +1,4 @@
-import {observable, action} from 'mobx';
+import { observable, action } from 'mobx';
 
 export type species = {
     name: string,
@@ -27,7 +27,7 @@ type npcState = {
     species: species | null,
     magicType: string,
     weapon: string,
-    variant: variant | null,
+    variant: variant | null
 }
 
 export const npcStore: npcState = observable({

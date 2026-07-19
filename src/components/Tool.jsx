@@ -5,7 +5,7 @@ import DiceRoller from './tools/dice/DiceRoller';
 import DiceImporterExporter from './tools/dice/DiceImporterExporter';
 import Monster from './tools/monster/Monster';
 import Mirror from './tools/Mirror';
-import Encounter from './tools/Encounter';
+import Encounter from './tools/encounter/Encounter';
 import { toolStore } from '../stores/tool-store';
 
 const TOOLS = {

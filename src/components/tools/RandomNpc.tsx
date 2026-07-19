@@ -1,5 +1,5 @@
 import { PROFESSIONS, SPECIES, MAGIC_TYPES, WEAPONS, VARIANTS } from '../../constants/npcValues';
-import { npcStore, setProfession, setSpecies, setSubspecies, setMagicType, setWeapon, setVariant } from '../../stores/npc-store';
+import { npcStore, setProfession, setSpecies, setMagicType, setWeapon, setVariant } from '../../stores/npc-store';
 import { observer } from 'mobx-react';
 import '../../css/RandomNpc.css';
 import Column from '../common/Column';

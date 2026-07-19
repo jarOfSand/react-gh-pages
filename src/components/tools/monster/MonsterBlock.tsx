@@ -1,3 +1,7 @@
+// consider for custom stat blocks and .monster file format
+// https://tetra-cube.com/dnd/dnd-statblock.html
+
+
 import { observer } from 'mobx-react';
 import { CSSProperties } from 'react';
 
@@ -47,7 +51,7 @@ const CAR2: CSSProperties = {
 function statRectangle(statName: string, statValue: number) {
     const saveProficiency = getSaveProficiency(statName);
 
-    const modifier = Math.ceil((statValue - 10) / 2);
+    const modifier = Math.floor((statValue - 10) / 2);
     const modifierString = modifier >= 0 ? `+${modifier}` : `${modifier}`;
 
     return <div style={{}}>
@@ -133,6 +137,8 @@ function ArmorClass() {
         } else {
             acStrings.unshift(element.value);
         }
+
+
     })
 
     return <div><strong>{'AC'}</strong>{` ${acStrings.join(', ')}`}</div>

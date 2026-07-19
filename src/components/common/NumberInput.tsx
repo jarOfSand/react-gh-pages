@@ -1,11 +1,11 @@
 import Row from './Row';
 
-function NumberInput(props: { max?: number, setter: Function, value: number }) {
-    const {max, setter, value} = props;
+function NumberInput(props: { max?: number, min?: number, setter: Function, value: number }) {
+    const {max, min, setter, value} = props;
 
     return (<Row>
         <button onClick={() => {
-            if (value > 1) {
+            if (!min || value > min) {
                 setter(value - 1);
             }
         }}>{'-1'}</button>

@@ -1,8 +1,10 @@
 import { observer } from 'mobx-react';
-import { encounterStore, setPlayerCount, setPlayerLevel, setEnemyCount } from '../../stores/encounter-store';
-import Column from '../common/Column';
-import Row from '../common/Row';
-import NumberInput from '../common/NumberInput';
+import { encounterStore, setPlayerCount, setPlayerLevel, setEnemyCount, addToRoster } from '../../../stores/encounter-store';
+import Column from '../../common/Column';
+import Row from '../../common/Row';
+import NumberInput from '../../common/NumberInput';
+import CrInput from './CrInput';
+import EncounterRoster from './EncounterRoster';
 
 function getMultiplierIndex() {
     const { enemyCount } = encounterStore;
@@ -100,31 +102,39 @@ function XpRow(props: { row: xpThreshold, multiplier: number, difficulty: diffic
 }
 
 function Encounter() {
-    const { pcCount, pcLevel, enemyCount } = encounterStore;
+    const { pcCount, pcLevel, enemyCount} = encounterStore;
 
     const multiplier = getMultiplier();
     const row = XP_THRESHOLDS_BY_PC_LEVEL.find(row => row.level === pcLevel) as xpThreshold;
 
     return (
-        <Row>
-            <Column style={{ marginRight: '20px', gap: '5px' }}>
-                <div>{'pc count'}</div>
-                <div>{'pc level'}</div>
-                <div>{'enemy count'}</div>
-                <div>{'encounter xp'}</div>
-            </Column>
-            <Column style={{ gap: '5px' }}>
-                <NumberInput value={pcCount} setter={setPlayerCount} />
-                <NumberInput value={pcLevel} setter={setPlayerLevel} max={20} />
-                <NumberInput value={enemyCount} setter={setEnemyCount} />
-                <div>
-                    <XpRow row={row} multiplier={multiplier} difficulty={'easy'} />
-                    <XpRow row={row} multiplier={multiplier} difficulty={'medium'} />
-                    <XpRow row={row} multiplier={multiplier} difficulty={'hard'} />
-                    <XpRow row={row} multiplier={multiplier} difficulty={'deadly'} />
-                </div>
-            </Column>
-        </Row>);
+        <Column>
+            <Row>
+                <Column style={{ marginRight: '20px', gap: '5px' }}>
+                    <div>{'pc count'}</div>
+                    <div>{'pc level'}</div>
+                    <div>{'enemy count'}</div>
+                    <div>{'encounter xp'}</div>
+                </Column>
+                <Column style={{ gap: '5px' }}>
+                    <NumberInput value={pcCount} setter={setPlayerCount} min={1} />
+                    <NumberInput value={pcLevel} setter={setPlayerLevel} min={1} max={20} />
+                    <NumberInput value={enemyCount} setter={setEnemyCount} min={1} />
+                    <div>
+                        <XpRow row={row} multiplier={multiplier} difficulty={'easy'} />
+                        <XpRow row={row} multiplier={multiplier} difficulty={'medium'} />
+                        <XpRow row={row} multiplier={multiplier} difficulty={'hard'} />
+                        <XpRow row={row} multiplier={multiplier} difficulty={'deadly'} />
+                    </div>
+                </Column>
+            </Row>
+            <Row style={{paddingTop: '40px'}}>
+                <CrInput />
+                <button onClick={addToRoster}>{'add'}</button>
+            </Row>
+            <EncounterRoster/>
+        </Column>
+    );
 }
 
 export default observer(Encounter);
