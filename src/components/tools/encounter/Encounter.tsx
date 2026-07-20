@@ -102,7 +102,7 @@ function XpRow(props: { row: xpThreshold, multiplier: number, difficulty: diffic
 }
 
 function Encounter() {
-    const { pcCount, pcLevel, enemyCount} = encounterStore;
+    const { pcCount, pcLevel, enemyCount } = encounterStore;
 
     const multiplier = getMultiplier();
     const row = XP_THRESHOLDS_BY_PC_LEVEL.find(row => row.level === pcLevel) as xpThreshold;
@@ -128,11 +128,11 @@ function Encounter() {
                     </div>
                 </Column>
             </Row>
-            <Row style={{paddingTop: '40px'}}>
+            <Row style={{ paddingTop: '40px' }}>
                 <CrInput />
                 <button onClick={addToRoster}>{'add'}</button>
             </Row>
-            <EncounterRoster/>
+            <EncounterRoster />
         </Column>
     );
 }

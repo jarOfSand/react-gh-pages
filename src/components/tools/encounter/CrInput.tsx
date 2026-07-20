@@ -10,11 +10,14 @@ function CrInput() {
 
     return (<Row>
         <button onClick={() => {
+            setCR(0);
+        }}>{'<<'}</button>
+        <button onClick={() => {
             if (currentCrIndex > 0) {
                 setCR(currentCrIndex - 1);
             }
         }}>{'<-'}</button>
-        <input value={getCrString(currentCrIndex)} style={{width: '30px'}} />
+        <input value={`cr ${getCrString(currentCrIndex)} (${CR_XP[currentCrIndex]}xp)`} style={{width: '100px'}} />
         <button onClick={() => {
             if(currentCrIndex < MAX){
                 setCR(currentCrIndex + 1);
