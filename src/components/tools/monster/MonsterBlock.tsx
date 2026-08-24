@@ -10,6 +10,7 @@ import DiceButton from '../dice/DiceButton';
 import { handfull } from '../../../classes/handfull-class';
 import { splitTextAroundMatches } from '../../../helpers/monster-helper';
 import { ability } from '../../../types/monster';
+import LootButton from '../../common/LootButton';
 
 function getSaveProficiency(statName: string): number {
     const { proficiencies } = monsterStore.activeMonster;
@@ -193,6 +194,7 @@ function MonsterBlock(): React.JSX.Element | null {
     }
 
     return <div style={{ overflowY: 'auto', flexGrow: 1, paddingRight: '10px' }}>
+        <LootButton cr={activeMonster.challenge_rating}/>
         <div style={{ fontSize: 'larger', fontWeight: 'bold' }}>{activeMonster.name}</div>
         <div style={{ fontSize: 'smaller', marginBottom: '10px' }}>{`${activeMonster.size} ${activeMonster.type}`}</div>
         <ArmorClass />

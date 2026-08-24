@@ -1,6 +1,9 @@
 import { observable, action } from 'mobx';
 import { toast } from 'react-toastify';
 import { handfull } from '../classes/handfull-class';
+import { parseDiceCookie } from '../helpers/dice-helper';
+
+const Cookies = require('js-cookie');
 
 export type rollSummary = {
     name: string,
@@ -22,17 +25,15 @@ type diceState = {
     tempName: string,
 };
 
-const initialDice1 = new handfull('1d20+4', 'dagger(atk)');
-const initialDice2 = new handfull('1d4+2', 'dagger(dmg)')
-const initialDice3 = new handfull('1d20-1d4', 'd20 with bane')
+const initialDice1 = new handfull('1d20', 'd20');
+const initialDice2 = new handfull('8d6', 'fireball(level 3)');
+
+const initialCookie = Cookies.get('dice');
+const initialDice = new Map<string, handfull>(initialCookie ? parseDiceCookie(initialCookie).map(handfull => { return [handfull.id, handfull] }) : [[initialDice1.id, initialDice1], [initialDice2.id, initialDice2]]);
 
 export const diceStore: diceState = observable({
     critMode: false,
-    customHandfulls: new Map<string, handfull>([
-        [initialDice1.id, initialDice1],
-        [initialDice2.id, initialDice2],
-        [initialDice3.id, initialDice3]
-    ]),
+    customHandfulls: initialDice,
     deletionMode: false,
     history: [],
     importExportMode: false,
@@ -74,11 +75,19 @@ export const handleCustomButtonClick = action((dice: handfull, removable: boolea
 
     if (deletionMode && removable) {
         diceStore.customHandfulls.delete(dice.id);
+        updateCookie();
     } else {
         const rollHistory = dice.roll(critMode);
         updateHistory(rollHistory);
     }
 })
+
+function updateCookie() {
+        const { customHandfulls } = diceStore;
+        const diceCookie = [...customHandfulls.values()].map(handfull => `${handfull.diceString}|${handfull.name}`).join(',');
+    
+        Cookies.set('dice', diceCookie);
+}
 
 export const saveHandfull = action(() => {
     const { tempDiceString, tempName, customHandfulls } = diceStore;
@@ -87,6 +96,7 @@ export const saveHandfull = action(() => {
         const newHandfull = new handfull(tempDiceString, tempName);
         customHandfulls.set(newHandfull.id, newHandfull);
     }
+    updateCookie();
 });
 
 export const setHandfullName = action((handfullName: string) => {

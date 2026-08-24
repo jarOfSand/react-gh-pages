@@ -6,6 +6,7 @@ import DiceImporterExporter from './tools/dice/DiceImporterExporter';
 import Monster from './tools/monster/Monster';
 import Mirror from './tools/Mirror';
 import Encounter from './tools/encounter/Encounter';
+import Cookie from './tools/Cookie';
 import { toolStore } from '../stores/tool-store';
 
 const TOOLS = {
@@ -16,6 +17,7 @@ const TOOLS = {
     'mirror': <Mirror/>,
     // 'monster': <Monster/>,
     'encounter': <Encounter/>,
+    'cookie': <Cookie/>,
 }
 
 function getTool(activeTool) {
