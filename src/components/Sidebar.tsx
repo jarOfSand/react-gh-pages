@@ -1,15 +1,20 @@
 import { setActiveTool } from '../stores/tool-store';
+import { cookieStore } from '../stores/cookie-store';
 import Column from '../components/common/Column';
+import { observer } from 'mobx-react';
 
 function SidebarButton(props: { targetTool: string }) {
     return <button onClick={() => setActiveTool(props.targetTool)}>{props.targetTool}</button>
 }
 
 function Sidebar() {
+    const {allowCookies} = cookieStore;
+
     return (
         <Column style={{ backgroundColor: '#ccc', height: '100vh', width: '85px'}}>
             <div style={{marginTop: '10px', fontSize: 'smaller'}}>{'tools'}</div>
             <SidebarButton targetTool={'dice'} />
+            {/* {allowCookies ? <SidebarButton targetTool={'cookie'} /> : null} */}
             <SidebarButton targetTool={'cookie'} />
             <div style={{ marginTop: '10px', fontSize: 'smaller' }}>{'dm tools'}</div>
             <SidebarButton targetTool={'cipher'} />
@@ -22,4 +27,4 @@ function Sidebar() {
     );
 }
 
-export default Sidebar;
+export default observer(Sidebar);

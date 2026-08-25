@@ -2,6 +2,7 @@ import { observable, action } from 'mobx';
 import { toast } from 'react-toastify';
 import { handfull } from '../classes/handfull-class';
 import { parseDiceCookie } from '../helpers/dice-helper';
+import { setDiceCookie } from './cookie-store';
 
 const Cookies = require('js-cookie');
 
@@ -75,19 +76,14 @@ export const handleCustomButtonClick = action((dice: handfull, removable: boolea
 
     if (deletionMode && removable) {
         diceStore.customHandfulls.delete(dice.id);
-        updateCookie();
+        setDiceCookie();
     } else {
         const rollHistory = dice.roll(critMode);
         updateHistory(rollHistory);
     }
 })
 
-function updateCookie() {
-        const { customHandfulls } = diceStore;
-        const diceCookie = [...customHandfulls.values()].map(handfull => `${handfull.diceString}|${handfull.name}`).join(',');
-    
-        Cookies.set('dice', diceCookie);
-}
+
 
 export const saveHandfull = action(() => {
     const { tempDiceString, tempName, customHandfulls } = diceStore;
@@ -96,7 +92,7 @@ export const saveHandfull = action(() => {
         const newHandfull = new handfull(tempDiceString, tempName);
         customHandfulls.set(newHandfull.id, newHandfull);
     }
-    updateCookie();
+    setDiceCookie();
 });
 
 export const setHandfullName = action((handfullName: string) => {
