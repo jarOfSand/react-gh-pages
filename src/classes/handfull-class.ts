@@ -1,5 +1,6 @@
 import { rollSummary } from '../stores/dice-store';
 import { toast, ToastOptions } from 'react-toastify';
+import {sum} from '../helpers/dice-helper';
 
 const Chance = require('chance');
 const chance = new Chance();
@@ -15,9 +16,9 @@ export type die = {
     operation: operation;
 }
 
-function removeAllSubstrings(text: string, matches: RegExpExecArray[]): string {
-    return matches.reduce((result: string, match: RegExpExecArray) => {
-        return result.replace(match[0], '');
+function removeAllSubstrings(text: string, substrings: string[]): string {
+    return substrings.reduce((result: string, substring: string) => {
+        return result.replace(substring, '');
     }, text);
 }
 
@@ -28,19 +29,19 @@ function parseMathStep(matchString: string): mathStep {
     return {operation, value: trimmedString};
 }
 
-function getMathSteps(diceString: string) {
-    const DICE_REGEX = /[+-]?\s?[0-9]?d[0-9]+/g;
-    const diceMatches = [...diceString.matchAll(DICE_REGEX)];
+function getMatches(input: string, regex: RegExp) {
+    return [...input.matchAll(regex)].map(match => match[0]);
+}
 
+function getMathSteps(diceString: string): {diceSteps: mathStep[], modSteps: mathStep[]} {
+    const diceMatches = getMatches(diceString, /[+-]?\s?[0-9]?d[0-9]+/g);
     const sansDice = removeAllSubstrings(diceString, diceMatches);
+    const modMatches = getMatches(sansDice, /[+-]?\s?[0-9]+/g);
 
-    const MOD_REGEX = /[+-]?\s?[0-9]+/g;
-    const modMatches = [...sansDice.matchAll(MOD_REGEX)];
-
-    const diceSteps = diceMatches.map(diceMatch => parseMathStep(diceMatch[0]));
-    const modSteps = modMatches.map(modMatch => parseMathStep(modMatch[0]));
-
-    return {diceSteps, modSteps};
+    return {
+        diceSteps: diceMatches.map(parseMathStep),
+        modSteps: modMatches.map(parseMathStep)
+    }
 }
 
 function getDie(diceStep: mathStep): die {
@@ -54,6 +55,9 @@ function getDie(diceStep: mathStep): die {
     }
 }
 
+function getModifiers(modSteps: mathStep[]): number[] {
+    return modSteps.map(step => parseInt(step.value) * (step.operation === 'add' ? 1 : -1));
+}
 
 const CRIT_TOAST_PROPS: ToastOptions = {
     autoClose: 1000,
@@ -61,16 +65,6 @@ const CRIT_TOAST_PROPS: ToastOptions = {
     closeOnClick: true,
     theme: 'colored'
 };
-
-function sum(results: number[]): number {
-    return results.reduce((sum, result) => {
-        return sum + result;
-    }, 0)
-}
-
-function getModifiers(modSteps: mathStep[]): number[] {
-    return modSteps.map(step => parseInt(step.value) * (step.operation === 'add' ? 1 : -1));
-}
 
 export class handfull {
     name: string;
@@ -81,18 +75,16 @@ export class handfull {
 
     constructor(diceString: string, name = '') {
         const {diceSteps, modSteps} = getMathSteps(diceString);
-        const modifiers = getModifiers(modSteps);
-        const dice = diceSteps.map(getDie);
 
-        this.staticMods = modifiers;
-        this.dice = dice;
+        this.staticMods = getModifiers(modSteps);
+        this.dice = diceSteps.map(getDie);
         this.name = name;
         this.diceString = diceString;
         this.id = chance.guid();
     }
     
     roll(isCrit = false): rollSummary {
-        const allDiceResults: number[] = [];
+        const addends: number[] = [];
         this.dice.forEach(die => {
             const qty = die.quantity * (isCrit ? 2 : 1);
             for (let i = 0; i < qty; i++) {
@@ -105,11 +97,11 @@ export class handfull {
                         toast.error('Nat 1!', CRIT_TOAST_PROPS);
                     }
                 }
-                allDiceResults.push(result * (die.operation === 'add' ? 1 : -1))
+                addends.push(result * (die.operation === 'add' ? 1 : -1))
             }
         });
 
-        const result = allDiceResults.concat(this.staticMods);
+        const result = addends.concat(this.staticMods);
 
         return {
             name: this.name,
