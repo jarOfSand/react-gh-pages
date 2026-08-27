@@ -1,5 +1,4 @@
 import { diceStore, saveHandfull, rollTempHandfull, setTempDiceString, setHandfullName } from '../../../stores/dice-store';
-import { cookieStore, setAllowCookies } from '../../../stores/cookie-store';
 import { observer } from 'mobx-react';
 import '../../../css/DiceRoller.css';
 import { handfull } from '../../../classes/handfull-class';
@@ -11,7 +10,6 @@ import Row from '../../common/Row';
 
 function DiceRoller() {
     const { customHandfulls, tempDiceString, tempName } = diceStore;
-    const { allowCookies } = cookieStore;
 
     const buttons: React.JSX.Element[] = [];
     customHandfulls.forEach((dice: handfull) => {

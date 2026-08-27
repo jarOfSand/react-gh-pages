@@ -10,7 +10,7 @@ function Cookie() {
         setAllowCookies(true);
         const cookie = setDiceCookie();
         setCookieValue(cookie);
-    }}>{'allow cookie'}</button>
+    }}>{'allow dice cookie'}</button>
     const disableDiceButton = <button onClick={() => {
         Cookies.remove('dice');
         setCookieValue(undefined);
