@@ -12,3 +12,13 @@ export function sum(results: number[]): number {
         return sum + result;
     }, 0);
 }
+
+export function getMatches(input: string, regex: RegExp) {
+    return [...input.matchAll(regex)].map(match => match[0]);
+}
+
+export function removeAllSubstrings(text: string, substrings: string[]): string {
+    return substrings.reduce((result: string, substring: string) => {
+        return result.replace(substring, '');
+    }, text);
+}

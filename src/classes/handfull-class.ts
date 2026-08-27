@@ -1,6 +1,6 @@
 import { rollSummary } from '../stores/dice-store';
 import { toast, ToastOptions } from 'react-toastify';
-import {sum} from '../helpers/dice-helper';
+import { sum, getMatches, removeAllSubstrings } from '../helpers/dice-helper';
 
 const Chance = require('chance');
 const chance = new Chance();
@@ -16,21 +16,11 @@ export type die = {
     operation: operation;
 }
 
-function removeAllSubstrings(text: string, substrings: string[]): string {
-    return substrings.reduce((result: string, substring: string) => {
-        return result.replace(substring, '');
-    }, text);
-}
-
 function parseMathStep(matchString: string): mathStep {
     const operation = matchString.includes('-') ? 'subtract' : 'add';
     const trimmedString = matchString.replace('-', '').replace('+', '').trim();
 
     return {operation, value: trimmedString};
-}
-
-function getMatches(input: string, regex: RegExp) {
-    return [...input.matchAll(regex)].map(match => match[0]);
 }
 
 function getMathSteps(diceString: string): {diceSteps: mathStep[], modSteps: mathStep[]} {
@@ -46,12 +36,12 @@ function getMathSteps(diceString: string): {diceSteps: mathStep[], modSteps: mat
 
 function getDie(diceStep: mathStep): die {
     const {value, operation} = diceStep;
-    const [diceQuantString, diceSizeString] = value.split('d');
+    const [diceCount, diceSize] = value.split('d');
 
     return {
         operation,
-        size: parseInt(diceSizeString),
-        quantity: diceQuantString ? parseInt(diceQuantString) : 1
+        size: parseInt(diceSize),
+        quantity: diceCount ? parseInt(diceCount) : 1
     }
 }
 
